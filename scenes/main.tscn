@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3yk4ldhquny2"]
+
+[ext_resource type="Script" uid="uid://dqqd0w60a4gh7" path="res://scripts/main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://h8bbwedunq3j" path="res://scenes/player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cel8o1im6wrok" path="res://scenes/world.tscn" id="4_5vw27"]
+[ext_resource type="Script" uid="uid://bm0yax28tn2cp" path="res://scripts/score_label.gd" id="6_272bh"]
+[ext_resource type="Script" uid="uid://h8iihlsi5rew" path="res://scripts/combo_label.gd" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://b02266olybyh0" path="res://scenes/inside_house.tscn" id="9_kek77"]
+
+[sub_resource type="Theme" id="Theme_5vw27"]
+default_font_size = 22
+
+[node name="Main" type="Node"]
+script = ExtResource("1_h2yge")
+inside_house_scene = ExtResource("9_kek77")
+world_scene = ExtResource("4_5vw27")
+world_x = 30.0
+world_z = 30.0
+world_y = 1.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)
+shadow_enabled = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_5vw27")
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 24.0
+offset_right = 130.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0"
+script = ExtResource("6_272bh")
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.372549)
+
+[node name="Label" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -109.5
+offset_top = -14.0
+offset_right = 109.5
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press Enter to retry."
+
+[node name="ComboLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 48.0
+offset_right = 172.0
+offset_bottom = 76.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Combo: 0"
+script = ExtResource("7_272bh")
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 10.2471, 0)
+
+[node name="CameraPivot2" type="Marker3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0.327, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraPivot2"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -2.63739, 10.6374)
+fov = 73.5583
+size = 19.0
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="inside_door" from="Player" to="." method="_on_player_inside_door"]
+[connection signal="outside_door" from="Player" to="." method="_on_player_outside_door"]
