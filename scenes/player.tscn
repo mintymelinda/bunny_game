@@ -1,23 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://h8bbwedunq3j"]
+[gd_scene load_steps=4 format=3 uid="uid://h8bbwedunq3j"]
 
 [ext_resource type="Script" uid="uid://b5uelrrjj283r" path="res://scripts/player.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://bdp1ab38hxag6" path="res://scenes/bunny.tscn" id="2_i3pqv"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_i3pqv"]
-size = Vector3(0.614044, 0.619446, 0.389771)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_onrkg"]
 size = Vector3(1.44385, 1.17438, 1.40223)
 
-[node name="Player" type="CharacterBody3D"]
-collision_mask = 30
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_mask = 190
 script = ExtResource("1_onrkg")
 bounce_impulse = 25
 slam_impulse = 50
-
-[node name="DoorChecker" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.00209434, -2.93992e-12, -0.999998, 0.0932396, 0.995644, 0.000195276, 0.995641, -0.0932396, 0.00208522, 1.14273, 1.36925, 0.12832)
-shape = SubResource("BoxShape3D_i3pqv")
 
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)

@@ -16,6 +16,8 @@ func initialize(canopy, blocking_groups = null):
 	scale.z = size_scale
 	
 	blocking_types = blocking_groups
+	
+	surface.add(self)
 
 func set_random_rotate_y():
 	rotate_y(randf() * PI)
@@ -30,7 +32,7 @@ func get_coverage() -> float:
 	return surface.get_coverage() * placement_scale / _get_area() * density
 
 func _get_area():
-	return PI * _get_scaled_radius()  * _get_scaled_radius()
+	return PI * _get_scaled_radius() * _get_scaled_radius()
 
 func _get_scaled_radius() -> float:
 	return $Area.shape.radius * scale.x

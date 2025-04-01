@@ -6,3 +6,6 @@ func initialize(canopy, blocking_groups = null):
 	set_random_placement()
 	set_random_rotate_y()
 	set_random_rotate_x()
+
+func smash():
+	queue_free()

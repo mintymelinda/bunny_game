@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://cok56pa3va1a2"]
+
+[ext_resource type="Script" uid="uid://hn5c0swoonbe" path="res://scripts/round_ground.gd" id="1_hcpl7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pybca"]
+albedo_color = Color(0.350479, 0.56113, 0.156234, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_mi8v4"]
+material = SubResource("StandardMaterial3D_pybca")
+radius = 30.0
+height = 60.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mi8v4"]
+radius = 30.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lmksl"]
+radius = 30.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pybca"]
+radius = 30.0
+
+[node name="Ground" type="StaticBody3D"]
+collision_layer = 4
+script = ExtResource("1_hcpl7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_mi8v4")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_mi8v4")
+
+[node name="Area" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_lmksl")
+
+[node name="Area3D" type="Area3D" parent="."]
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_pybca")

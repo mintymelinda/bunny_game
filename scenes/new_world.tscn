@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://brjh17xcdjuu7"]
+
+[ext_resource type="PackedScene" uid="uid://cok56pa3va1a2" path="res://scenes/round_ground.tscn" id="1_flq5a"]
+[ext_resource type="PackedScene" uid="uid://h8bbwedunq3j" path="res://scenes/player.tscn" id="2_v3kja"]
+
+[node name="NewWorld" type="Node"]
+
+[node name="Ground" parent="." instance=ExtResource("1_flq5a")]
+
+[node name="Player" parent="." instance=ExtResource("2_v3kja")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 30.8957, 0)
+
+[node name="CameraPivot" type="Marker3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.75471, 0.656059, 0, -0.656059, 0.75471, 0, 0.327, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraPivot"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -2.637, 11.637)
+fov = 90.6
+size = 19.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.109561, 0.99398, 0, -0.99398, -0.109561, 0, 56.8828, 0)
