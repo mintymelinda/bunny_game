@@ -28,6 +28,8 @@ func _physics_process(delta):
 	## debug shortcut to reload environment
 	if Input.is_action_just_pressed("butt_slam"):
 		die()
+		
+	
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
 	if Input.is_action_pressed("move_left"):

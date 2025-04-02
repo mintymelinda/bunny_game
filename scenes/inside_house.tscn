@@ -1,16 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://b02266olybyh0"]
+[gd_scene load_steps=10 format=3 uid="uid://b02266olybyh0"]
 
-[ext_resource type="Script" uid="uid://bapmv4ie843gv" path="res://scenes/inside_house.gd" id="1_13n5k"]
+[ext_resource type="Script" uid="uid://bapmv4ie843gv" path="res://scripts/inside_house.gd" id="1_13n5k"]
 [ext_resource type="PackedScene" uid="uid://cupc2uxfa8nbc" path="res://art/house-no-roof.glb" id="3_k5w3f"]
 [ext_resource type="PackedScene" uid="uid://cywvxj0b27eh2" path="res://scenes/power_up.tscn" id="3_wriv2"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_13n5k"]
-radius = 3.17891
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qn2ct"]
 size = Vector3(35.9622, 0.965254, 32.4187)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wriv2"]
+albedo_color = Color(0.253032, 0.136359, 0.0458914, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_yn6d1"]
+material = SubResource("StandardMaterial3D_wriv2")
 size = Vector3(36, 1, 32)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_13n5k"]
@@ -19,16 +20,11 @@ data = PackedVector3Array(3.3968, 3.6955, 3.1148, 3.4211, 3.6173, 3.1303, 3.3968
 [sub_resource type="BoxShape3D" id="BoxShape3D_wriv2"]
 size = Vector3(6.29742, 1.33441, 0.800232)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_13n5k"]
+radius = 0.876495
+
 [node name="InsideHouse" type="Node3D"]
 script = ExtResource("1_13n5k")
-
-[node name="InsideDoor" type="StaticBody3D" parent="." groups=["inside_door"]]
-collision_layer = 16
-collision_mask = 0
-
-[node name="Door" type="CollisionShape3D" parent="InsideDoor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0120937, -3.07804, 3.03341)
-shape = SubResource("SphereShape3D_13n5k")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.492714, 0)
@@ -39,6 +35,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0218353, 0.00357914, 0)
 shape = SubResource("BoxShape3D_qn2ct")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0240741, 0)
 mesh = SubResource("BoxMesh_yn6d1")
 
 [node name="House" type="StaticBody3D" parent="." groups=["house"]]
@@ -58,8 +55,8 @@ shape = SubResource("BoxShape3D_wriv2")
 transform = Transform3D(1, 0, 0, 0, 0.34202, 0.939693, 0, -0.939693, 0.34202, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.999848, 0.0174524, 0, -0.0174524, 0.999847, 0.078, 0.069, 7.044)
-fov = 49.2
+transform = Transform3D(1, 0, 0, 0, 0.998255, -0.0590453, 0, 0.0590453, 0.998255, 0.078, -0.042367, 6.36246)
+fov = 60.7
 size = 19.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -70,3 +67,12 @@ shadow_enabled = true
 [node name="PowerUp" parent="." instance=ExtResource("3_wriv2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 128
+speed = 0.9
+
+[node name="InsideDoor" type="Area3D" parent="." groups=["inside_door"]]
+
+[node name="Door" type="CollisionShape3D" parent="InsideDoor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0120937, -0.13868, 3.17195)
+shape = SubResource("SphereShape3D_13n5k")
+
+[connection signal="body_entered" from="InsideDoor" to="." method="_on_inside_door_body_entered"]

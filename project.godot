@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.4")
 
 buses/default_bus_layout=""
 
+[autoload]
+
+Globals="*res://scripts/globals.gd"
+
 [display]
 
 window/size/viewport_width=720

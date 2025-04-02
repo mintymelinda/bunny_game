@@ -4,15 +4,17 @@ signal eaten
 
 @export var animation_speed = 1.0
 
-func initialize(canopy, blocking_groups = null):
-	super(canopy, blocking_groups)
+func initialize():
+	super()
 	
-	set_random_placement()
+	blocking_types = ["food", "water", "tree", "rock", "spawn", "house"]
+	
 	set_random_rotate_y()
+	set_random_placement()
 	
 	$AnimationPlayer.speed_scale = animation_speed
 	$AnimationPlayer.stop()
-	
+
 func eat(combo):
 	for index in range(combo):
 		eaten.emit()
@@ -20,5 +22,5 @@ func eat(combo):
 	$SpoilTimer.start()
 	
 func _on_spoil_timer_timeout() -> void:
-	surface.remove(self)
+	Globals.remove(self)
 	queue_free()
