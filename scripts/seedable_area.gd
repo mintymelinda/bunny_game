@@ -1,7 +1,7 @@
 extends Node
 class_name SeedableArea
 
-@export var seedableThings: Array[PackedScene]
+@export var seedable_things: Array[PackedScene]
 
 var ground = preload("res://scenes/ground.tscn").instantiate()
 var seeded = false
@@ -12,8 +12,8 @@ func _ready() -> void:
 		_seed_planet()
 
 func _seed_planet() -> void:
-	for seedableThing in seedableThings:
-		_seed(seedableThing)
+	for seedable_thing in seedable_things:
+		_seed(seedable_thing)
 	
 func _seed(seedableThing: PackedScene):
 	var _s = seedableThing.instantiate()

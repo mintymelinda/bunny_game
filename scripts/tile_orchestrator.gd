@@ -1,7 +1,8 @@
 extends Node3D
 
-@export var tileable_areas: Array[Node3D]
-var seedable_scene = load("res://scenes/seedable_area.tscn")
+#var seedable_scene = load("res://scenes/seedable_area.tscn")
+
+var tileable_areas: Array[Node3D]
 
 @export var pad_tiles: int = 2
 @export var random_placement: bool = false
@@ -11,9 +12,12 @@ func _ready() -> void:
 	for child in get_children():
 		tileable_areas.append(child)
 	
-	_place_tiles_sequentially()
+	if random_placement:
+		tileable_areas.shuffle()
 
-func _place_tiles_sequentially() -> void:
+	_place_tiles()
+
+func _place_tiles() -> void:
 	var index = 0
 	var tiles = ceil(sqrt(tileable_areas.size()))
 	for z in range(tiles + pad_tiles + pad_tiles):
@@ -41,9 +45,9 @@ func _place_tiles_sequentially() -> void:
 			_position_tile(tile, z, x)
 
 func _get_blank_tile():
-	var tile = seedable_scene.instantiate()
+	var tile = $FillerArea.duplicate()
 	add_child(tile)
-	return tile 
+	return tile
 
 func _position_tile(tile, z, x) -> void:
 	var x_offset = x * tile.ground.area.shape.size.x

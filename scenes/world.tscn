@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cel8o1im6wrok"]
+[gd_scene load_steps=14 format=3 uid="uid://cel8o1im6wrok"]
 
 [ext_resource type="Script" uid="uid://cx25vi430tbv2" path="res://scripts/world.gd" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://iaaejylj60ah" path="res://scenes/tile_orchestrator.tscn" id="2_w7kh3"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ced8yx8qkd00e" path="res://scenes/tree.tscn" id="5_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://cm730u0ulml1r" path="res://scenes/rock_1.tscn" id="6_q5onr"]
 [ext_resource type="PackedScene" uid="uid://rkjn733jsc6" path="res://scenes/house.tscn" id="7_q5onr"]
+[ext_resource type="PackedScene" uid="uid://cjyx7agn6j2ve" path="res://scenes/spawn_platform.tscn" id="8_jhx03"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
 albedo_color = Color(0.410382, 0.778188, 0.951627, 1)
@@ -39,27 +40,23 @@ wait_time = 5.0
 autostart = true
 
 [node name="TileOrchestrator" parent="." instance=ExtResource("2_w7kh3")]
+random_placement = true
 
 [node name="StartingArea" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-seedableThings = Array[PackedScene]([ExtResource("7_q5onr"), ExtResource("5_w7kh3"), ExtResource("3_4mrxx")])
+seedable_things = Array[PackedScene]([ExtResource("7_q5onr"), ExtResource("8_jhx03"), ExtResource("5_w7kh3")])
 
 [node name="ForestTile" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-seedableThings = Array[PackedScene]([ExtResource("5_w7kh3")])
-
-[node name="ForestTile2" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 0)
-seedableThings = Array[PackedScene]([ExtResource("5_w7kh3")])
+seedable_things = Array[PackedScene]([ExtResource("5_w7kh3")])
 
 [node name="Water" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-seedableThings = Array[PackedScene]([ExtResource("4_7r4gi")])
+seedable_things = Array[PackedScene]([ExtResource("4_7r4gi")])
 
 [node name="RockLand" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -60)
-seedableThings = Array[PackedScene]([ExtResource("6_q5onr"), ExtResource("5_e3hyu"), ExtResource("4_w7kh3"), ExtResource("5_w7kh3")])
+seedable_things = Array[PackedScene]([ExtResource("6_q5onr"), ExtResource("5_e3hyu"), ExtResource("4_w7kh3")])
 
-[node name="SeedableArea" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0, -60)
-seedableThings = Array[PackedScene]([ExtResource("5_e3hyu")])
+[node name="FoodLand" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+seedable_things = Array[PackedScene]([ExtResource("3_4mrxx")])
 
 [connection signal="timeout" from="FoodTimer" to="." method="_on_food_timer_timeout"]
 [connection signal="timeout" from="AutoSave" to="." method="_on_timer_timeout"]
