@@ -1,15 +1,15 @@
 [gd_scene load_steps=13 format=3 uid="uid://cel8o1im6wrok"]
 
 [ext_resource type="Script" uid="uid://cx25vi430tbv2" path="res://scripts/world.gd" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://iaaejylj60ah" path="res://scenes/tile_orchestrator.tscn" id="2_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://dk02u60juo0n4" path="res://scenes/food.tscn" id="3_4mrxx"]
-[ext_resource type="PackedScene" uid="uid://ccnc85xdsyxwb" path="res://scenes/ground.tscn" id="3_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://cbefpwd3fimx5" path="res://scenes/seedable_area.tscn" id="3_qfnet"]
 [ext_resource type="PackedScene" uid="uid://b1lpgy0irvrwq" path="res://scenes/water.tscn" id="4_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://pq7a21877g3m" path="res://scenes/rock_3.tscn" id="4_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://cakohk8r2wpub" path="res://scenes/rock_2.tscn" id="5_e3hyu"]
 [ext_resource type="PackedScene" uid="uid://ced8yx8qkd00e" path="res://scenes/tree.tscn" id="5_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://cm730u0ulml1r" path="res://scenes/rock_1.tscn" id="6_q5onr"]
 [ext_resource type="PackedScene" uid="uid://rkjn733jsc6" path="res://scenes/house.tscn" id="7_q5onr"]
-[ext_resource type="PackedScene" uid="uid://cjyx7agn6j2ve" path="res://scenes/spawn_platform.tscn" id="8_jhx03"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
 albedo_color = Color(0.410382, 0.778188, 0.951627, 1)
@@ -22,7 +22,6 @@ height = 2000.0
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_f3sb7")
-world_elements = Array[PackedScene]([ExtResource("8_jhx03"), ExtResource("7_q5onr"), ExtResource("4_w7kh3"), ExtResource("5_e3hyu"), ExtResource("6_q5onr"), ExtResource("4_7r4gi"), ExtResource("5_w7kh3"), ExtResource("3_4mrxx")])
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 33.83
@@ -35,12 +34,34 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -90)
 mesh = SubResource("SphereMesh_4mrxx")
 
-[node name="Ground" parent="." instance=ExtResource("3_tlwt5")]
-script = null
-
 [node name="AutoSave" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="TileOrchestrator" parent="." instance=ExtResource("2_w7kh3")]
+
+[node name="StartingArea" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+seedableThings = Array[PackedScene]([ExtResource("7_q5onr"), ExtResource("5_w7kh3"), ExtResource("3_4mrxx")])
+
+[node name="ForestTile" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -60)
+seedableThings = Array[PackedScene]([ExtResource("5_w7kh3")])
+
+[node name="ForestTile2" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 0)
+seedableThings = Array[PackedScene]([ExtResource("5_w7kh3")])
+
+[node name="Water" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0, 0)
+seedableThings = Array[PackedScene]([ExtResource("4_7r4gi")])
+
+[node name="RockLand" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -60)
+seedableThings = Array[PackedScene]([ExtResource("6_q5onr"), ExtResource("5_e3hyu"), ExtResource("4_w7kh3"), ExtResource("5_w7kh3")])
+
+[node name="SeedableArea" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0, -60)
+seedableThings = Array[PackedScene]([ExtResource("5_e3hyu")])
 
 [connection signal="timeout" from="FoodTimer" to="." method="_on_food_timer_timeout"]
 [connection signal="timeout" from="AutoSave" to="." method="_on_timer_timeout"]

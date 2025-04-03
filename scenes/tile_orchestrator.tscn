@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://iaaejylj60ah"]
+
+[ext_resource type="Script" uid="uid://bkyw28k01ex5w" path="res://scripts/tile_orchestrator.gd" id="1_li61a"]
+
+[node name="TileOrchestrator" type="Node3D"]
+script = ExtResource("1_li61a")

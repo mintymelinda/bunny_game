@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbefpwd3fimx5"]
+
+[ext_resource type="Script" uid="uid://dxio7geowee0c" path="res://scripts/seedable_area.gd" id="1_2n1r8"]
+[ext_resource type="PackedScene" uid="uid://ccnc85xdsyxwb" path="res://scenes/ground.tscn" id="2_esmpd"]
+
+[node name="SeedableArea" type="Node3D"]
+script = ExtResource("1_2n1r8")
+
+[node name="Ground" parent="." instance=ExtResource("2_esmpd")]
+script = null
