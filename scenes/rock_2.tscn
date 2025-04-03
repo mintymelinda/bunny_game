@@ -13,7 +13,6 @@ data = PackedVector3Array(0.8296, -0.0171, 0.6094, 0.9758, -0.0734, -0.1495, 0.3
 [node name="Rock" type="StaticBody3D" groups=["rock"]]
 collision_layer = 4
 script = ExtResource("1_hmj1u")
-placement_scale = 0.95
 
 [node name="Pivot" type="Node3D" parent="."]
 

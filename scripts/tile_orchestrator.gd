@@ -3,33 +3,49 @@ extends Node3D
 @export var tileable_areas: Array[Node3D]
 var seedable_scene = load("res://scenes/seedable_area.tscn")
 
-@export var num_z_tiles: int = 5
-@export var num_x_tiles: int = 5
-
-var tiles_placed: bool = false
+@export var pad_tiles: int = 2
+@export var random_placement: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for child in get_children():
 		tileable_areas.append(child)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	if not tiles_placed:
-		_place_tiles_sequentially()
+	
+	_place_tiles_sequentially()
 
 func _place_tiles_sequentially() -> void:
 	var index = 0
-	for z in range(num_z_tiles):
-		for x in range(num_x_tiles):
+	var tiles = ceil(sqrt(tileable_areas.size()))
+	for z in range(tiles + pad_tiles + pad_tiles):
+		for x in range(tiles + pad_tiles + pad_tiles):
 			var tile
-			if index >= tileable_areas.size():
-				tile = seedable_scene.instantiate()
-				add_child(tile)
+			if pad_tiles - z > 0:
+				# top row
+				tile = _get_blank_tile()
+			elif pad_tiles - x > 0:
+				# first column
+				tile = _get_blank_tile()
+			elif z >= tiles + pad_tiles:
+				# bottom row
+				tile = _get_blank_tile()
+			elif x >= tiles + pad_tiles:
+				# last column row
+				tile = _get_blank_tile()
+			elif index >= tileable_areas.size():
+				# filler
+				tile = _get_blank_tile()
 			else:
 				tile = tileable_areas[index]
 				index += 1
 
-			tile.position = Vector3(x * tile.ground_area.shape.size.x, 0.0, z * tile.ground_area.shape.size.x)
+			_position_tile(tile, z, x)
 
-	tiles_placed = true
+func _get_blank_tile():
+	var tile = seedable_scene.instantiate()
+	add_child(tile)
+	return tile 
+
+func _position_tile(tile, z, x) -> void:
+	var x_offset = x * tile.ground.area.shape.size.x
+	var z_offset = z * tile.ground.area.shape.size.z
+	tile.position = Vector3(x_offset, 0.0, z_offset)

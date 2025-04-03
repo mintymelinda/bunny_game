@@ -4,8 +4,8 @@ signal eaten
 
 @export var animation_speed = 1.0
 
-func initialize():
-	super()
+func initialize(g):
+	super(g)
 	
 	blocking_types = ["food", "water", "tree", "rock", "spawn", "house"]
 	
@@ -22,5 +22,5 @@ func eat(combo):
 	$SpoilTimer.start()
 	
 func _on_spoil_timer_timeout() -> void:
-	Globals.remove(self)
+	ground.remove(self)
 	queue_free()

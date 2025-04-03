@@ -2,6 +2,7 @@ extends Node3D
 
 @export var scaler = 3.0
 
+
 func initialize():
 	scale.x = scaler
 	scale.y = scaler
@@ -13,6 +14,4 @@ func initialize():
 func _on_inside_door_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		var player = body
-		if not player.power_ups.has("rock_destroy"):
-			player.power_ups.append("rock_destroy")
-		queue_free()
+		player.inside_door.emit()

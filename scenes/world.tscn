@@ -44,7 +44,6 @@ autostart = true
 seedableThings = Array[PackedScene]([ExtResource("7_q5onr"), ExtResource("5_w7kh3"), ExtResource("3_4mrxx")])
 
 [node name="ForestTile" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -60)
 seedableThings = Array[PackedScene]([ExtResource("5_w7kh3")])
 
 [node name="ForestTile2" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
@@ -52,7 +51,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 0)
 seedableThings = Array[PackedScene]([ExtResource("5_w7kh3")])
 
 [node name="Water" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0, 0)
 seedableThings = Array[PackedScene]([ExtResource("4_7r4gi")])
 
 [node name="RockLand" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]

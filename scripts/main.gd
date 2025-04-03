@@ -4,13 +4,6 @@ var saved_world_scene = "res://scenes/populated_world.tscn"
 var world_scene = "res://scenes/world.tscn"
 var inside_house_scene = "res://scenes/inside_house.tscn"
 
-@export var world_x: float = 60
-@export var world_z: float = 60
-@export var world_y: float = 2
-
-var x_size;
-var z_size;
-
 var world
 var inside_house
 

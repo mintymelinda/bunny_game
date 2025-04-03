@@ -1,7 +1,7 @@
 extends AreaBase
 
-func initialize():
-	super()
+func initialize(g):
+	super(g)
 
 	blocking_types = ["food", "spawn", "house"]
 
