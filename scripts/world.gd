@@ -18,7 +18,7 @@ func _on_location_changed():
 				_house.get_parent().call_deferred("remove_child", _house)
 
 		if house:
-			remove_child(house)
+			call_deferred("remove_child", house)
 			house.queue_free()
 
 		if not inside:

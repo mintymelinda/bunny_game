@@ -65,7 +65,7 @@ light_color = Color(0.874354, 0.81205, 0.785067, 1)
 shadow_enabled = true
 
 [node name="PowerUp" parent="." instance=ExtResource("3_wriv2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10976, 1, -1.86316)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.63102, 1, -1.28957)
 collision_layer = 128
 speed = 0.9
 power_up_name = "rock_destroy"
