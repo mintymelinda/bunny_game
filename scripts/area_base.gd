@@ -20,11 +20,9 @@ func set_random_rotate_x():
 	rotate_x(randf() * PI)
 
 func set_random_placement():
-	#await ground.ready
 	position = ground.get_random_position(blocking_types, _get_scaled_radius())
 
 func get_coverage() -> float:
-	#await ground.ready
 	return ground.get_coverage() / _get_area() * density
 
 func _get_area():

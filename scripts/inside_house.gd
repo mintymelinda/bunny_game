@@ -1,17 +1,16 @@
 extends Node3D
 
 @export var scaler = 3.0
-
+@onready var camera = $CameraPivot/Camera3D
+@onready var player_spawn = $SpawnMarker
 
 func initialize():
 	scale.x = scaler
 	scale.y = scaler
 	scale.z = scaler
-	 
-	$CameraPivot/Camera3D.current = true
-
 
 func _on_inside_door_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
-		var player = body
-		player.inside_door.emit()
+		Globals.set_location(Globals.location.outside_house)
+		body.global_position = Globals.location_position()
+		body.camera.current = true

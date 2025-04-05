@@ -7,6 +7,8 @@
 
 [node name="TileOrchestrator" type="Node3D"]
 script = ExtResource("1_li61a")
+pad_tiles = 0
+random_placement = true
 
 [node name="FillerArea" parent="." instance=ExtResource("2_tdy5y")]
 seedable_things = Array[PackedScene]([ExtResource("3_1g8en"), ExtResource("4_abbxa")])

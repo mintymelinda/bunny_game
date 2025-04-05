@@ -20,10 +20,10 @@ data = PackedVector3Array(3.3968, 3.6955, 3.1148, 3.4211, 3.6173, 3.1303, 3.3968
 [sub_resource type="BoxShape3D" id="BoxShape3D_wriv2"]
 size = Vector3(6.29742, 1.33441, 0.800232)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_13n5k"]
-radius = 0.876495
+[sub_resource type="BoxShape3D" id="BoxShape3D_k5w3f"]
+size = Vector3(0.878906, 1.60693, 0.302246)
 
-[node name="InsideHouse" type="Node3D"]
+[node name="InsideHouse" type="Node3D" groups=["inside_house"]]
 script = ExtResource("1_13n5k")
 
 [node name="Floor" type="StaticBody3D" parent="."]
@@ -38,7 +38,7 @@ shape = SubResource("BoxShape3D_qn2ct")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0240741, 0)
 mesh = SubResource("BoxMesh_yn6d1")
 
-[node name="House" type="StaticBody3D" parent="." groups=["house"]]
+[node name="House" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.987547, 0)
 collision_layer = 16
 
@@ -65,14 +65,19 @@ light_color = Color(0.874354, 0.81205, 0.785067, 1)
 shadow_enabled = true
 
 [node name="PowerUp" parent="." instance=ExtResource("3_wriv2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.10976, 1, -1.86316)
 collision_layer = 128
 speed = 0.9
+power_up_name = "rock_destroy"
 
 [node name="InsideDoor" type="Area3D" parent="." groups=["inside_door"]]
+collision_layer = 32
 
 [node name="Door" type="CollisionShape3D" parent="InsideDoor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0120937, -0.13868, 3.17195)
-shape = SubResource("SphereShape3D_13n5k")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0484532, 0.959831, 2.49575)
+shape = SubResource("BoxShape3D_k5w3f")
+
+[node name="SpawnMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.191982, 0, 1.9265)
 
 [connection signal="body_entered" from="InsideDoor" to="." method="_on_inside_door_body_entered"]

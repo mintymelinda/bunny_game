@@ -37,6 +37,5 @@ func _process(delta: float):
 		if progress_bar.value >= 99:
 			var packed_scene = ResourceLoader.load_threaded_get(path)
 			var scene = packed_scene.instantiate()
-			#scene.initialize()
 			scene_loaded.emit(scene)
 			queue_free()

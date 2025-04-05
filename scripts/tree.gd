@@ -3,7 +3,7 @@ extends AreaBase
 func initialize(g):
 	super(g)
 	
-	blocking_types = ["food", "spawn", "house"]
+	blocking_types = ["food", "spawn", "house", "mountain"]
 	
 	set_random_rotate_y()
 	set_random_placement()

@@ -1,8 +1,6 @@
 extends CharacterBody3D
 
 signal hit
-signal outside_door
-signal inside_door
 signal jump
 signal moved
 signal select_power_up
@@ -14,6 +12,8 @@ signal select_power_up
 @export var max_combo = 5
 @export var slam_impulse = 64
 @export var rotation_speed = 2
+
+@onready var camera = $CameraPivot/Camera
 
 var selected_power_up = "none"
 var power_ups: Array = ["none"]
@@ -28,8 +28,7 @@ func _physics_process(delta):
 	## debug shortcut to reload environment
 	if Input.is_action_just_pressed("butt_slam"):
 		die()
-		
-	
+
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
 	if Input.is_action_pressed("move_left"):
@@ -87,23 +86,6 @@ func _physics_process(delta):
 			if Vector3.UP.dot(collision.get_normal()) > 0.1:
 				food.eat(combo)
 				bounce()
-				break
-		
-		if collision.get_collider().is_in_group("inside_door"):
-			if Input.is_action_just_pressed("jump"):
-				target_velocity = Vector3.ZERO
-				position = last_position
-				inside_door.emit()
-				break
-
-		if collision.get_collider().is_in_group("outside_door"):
-			if Input.is_action_just_pressed("jump"):
-				target_velocity = Vector3.ZERO
-				if not last_position || last_position.distance_to(position) > 2:
-					last_position = position
-					
-				position = get_tree().get_first_node_in_group("spawn_marker").position
-				outside_door.emit()
 				break
 		
 		moved.emit(position)

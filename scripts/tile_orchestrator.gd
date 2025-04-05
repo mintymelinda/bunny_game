@@ -1,7 +1,5 @@
 extends Node3D
 
-#var seedable_scene = load("res://scenes/seedable_area.tscn")
-
 var tileable_areas: Array[Node3D]
 
 @export var pad_tiles: int = 2
@@ -10,16 +8,24 @@ var tileable_areas: Array[Node3D]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for child in get_children():
-		tileable_areas.append(child)
+		if child.enabled:
+			tileable_areas.append(child)
 	
 	if random_placement:
 		tileable_areas.shuffle()
 
-	_place_tiles()
+	if tileable_areas.size() > 0:
+		_place_tiles()
 
+# Calculates the square of `tilaeable_areas` 
+# used to calculate the size of the grid without padding
+func _get_tiles_squared():
+	return ceil(sqrt(tileable_areas.size()))
+
+# plac
 func _place_tiles() -> void:
 	var index = 0
-	var tiles = ceil(sqrt(tileable_areas.size()))
+	var tiles = _get_tiles_squared()
 	for z in range(tiles + pad_tiles + pad_tiles):
 		for x in range(tiles + pad_tiles + pad_tiles):
 			var tile
@@ -44,11 +50,13 @@ func _place_tiles() -> void:
 
 			_position_tile(tile, z, x)
 
+# Creates a duplicate of $FillerArea
 func _get_blank_tile():
 	var tile = $FillerArea.duplicate()
 	add_child(tile)
 	return tile
 
+# moves the passed in tile to an offset of +z +x
 func _position_tile(tile, z, x) -> void:
 	var x_offset = x * tile.ground.area.shape.size.x
 	var z_offset = z * tile.ground.area.shape.size.z
