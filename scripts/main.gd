@@ -18,7 +18,6 @@ func _process(_delta: float) -> void:
 
 func _ready():
 	add_child(world)
-	Globals.set_location(Globals.location.start)
+	Globals.set_location(Globals.location.mountain)
 	player.global_position = Globals.location_position()
 	player.camera.current = true
-#

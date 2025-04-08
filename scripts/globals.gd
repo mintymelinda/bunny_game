@@ -11,7 +11,9 @@ var current_location = location.start
 enum location {
 	start,
 	inside_house,
-	outside_house
+	outside_house,
+	mountain,
+	inside_mountain
 }
 
 func change_scene_to(scene: String, callback):
@@ -43,6 +45,13 @@ func location_position() -> Vector3:
 			return get_tree().get_first_node_in_group("inside_house").get_node("SpawnMarker").global_position
 		location.outside_house:
 			return get_tree().get_first_node_in_group("house").get_node("SpawnMarker").global_position
+		location.mountain:
+			return get_tree().get_first_node_in_group("mountain").get_node("SpawnMarker").global_position
+		location.inside_mountain:
+			if not get_tree().get_first_node_in_group("inside_mountain"):
+				get_tree().change_scene_to_packed(load("res://scenes/inside_mountain.tscn"))
+				
+			return get_tree().get_first_node_in_group("inside_mountain").get_node("SpawnMarker").global_position
 		_:
 			return Vector3.ZERO
 		

@@ -4,7 +4,8 @@ extends DirectionalLight3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	rotate_x(-PI / 2)
+	pass #rotate_x(-PI / 2)
 
 func _process(delta: float) -> void:
-	rotate_x(2 * PI * delta * speed)
+	pass	
+	#rotate_x(2 * PI * delta * speed)

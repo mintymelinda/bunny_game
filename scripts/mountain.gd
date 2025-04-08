@@ -5,7 +5,7 @@ func initialize(g):
 	
 	blocking_types = ["food", "spawn", "house", "rock", "water", "tree"]
 	
-	set_random_rotate_y()
+	#set_random_rotate_y()
 	#set_random_placement()
 
 func get_coverage() -> float:
@@ -13,3 +13,10 @@ func get_coverage() -> float:
 
 func _get_scaled_radius() -> float:
 	return $Mountain/Area/Area.shape.radius * scale.x
+
+
+func _on_door_body_entered(body: Node3D) -> void:
+	if body.is_in_group("player"):
+		Globals.set_location(Globals.location.inside_mountain)
+		body.global_position = Globals.location_position()
+		body.camera.current = true

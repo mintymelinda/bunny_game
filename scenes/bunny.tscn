@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdp1ab38hxag6"]
+[gd_scene load_steps=7 format=3 uid="uid://bdp1ab38hxag6"]
 
 [ext_resource type="PackedScene" uid="uid://br2h2h0pebc1n" path="res://art/bunny.glb" id="1_u834r"]
+[ext_resource type="ArrayMesh" uid="uid://cvpuvubaqukwq" path="res://art/bunny.obj" id="2_qn21b"]
 
 [sub_resource type="Animation" id="Animation_e4qck"]
 resource_name = "fly"
@@ -1078,6 +1079,10 @@ bones/14/scale = Vector3(1, 1, 1)
 bones/15/position = Vector3(-4.50573e-12, -1.21187e-09, 9.03562e-11)
 bones/15/rotation = Quaternion(0.790774, -0.0102285, -0.611752, -0.0182264)
 bones/15/scale = Vector3(1, 1, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Armature/Skeleton3D" index="1"]
+visible = false
+mesh = ExtResource("2_qn21b")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
