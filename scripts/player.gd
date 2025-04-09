@@ -17,7 +17,7 @@ signal ate(combo)
 @onready var camera = $CameraPivot/Camera
 
 var selected_power_up = "none"
-var power_ups: Array = ["rock_destroy"]
+var power_ups: Array = [selected_power_up]
 
 var last_position
 var target_velocity = Vector3.ZERO
