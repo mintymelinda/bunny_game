@@ -9,21 +9,33 @@ var tileable_areas: Array[Node3D]
 func _ready() -> void:
 	for child in get_children():
 		if child.enabled:
-			tileable_areas.append(child)
+			if child != $FillerArea:
+				tileable_areas.append(child)
 	
 	if random_placement:
 		tileable_areas.shuffle()
 
 	if tileable_areas.size() > 0:
 		_place_tiles()
+		
+	$FillerArea.queue_free()
 
 # Calculates the square of `tilaeable_areas` 
 # used to calculate the size of the grid without padding
 func _get_tiles_squared():
 	return ceil(sqrt(tileable_areas.size()))
 
-# plac
+# places tiles in a square configuration with $FillerArea to fill in any gaps
 func _place_tiles() -> void:
+	_place_tiles_squared()
+	
+#func _place_tiles_vertical_fill(z_fill) -> void:
+	#var index = 0
+	#var tiles = tileable_areas.size()
+	#for z in range(tiles + pad_tiles + pad_tiles)
+		
+
+func _place_tiles_squared():
 	var index = 0
 	var tiles = _get_tiles_squared()
 	for z in range(tiles + pad_tiles + pad_tiles):
