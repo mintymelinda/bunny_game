@@ -1,4 +1,4 @@
-extends AreaBase
+extends SeedableThing
 
 func initialize(g):
 	super(g)
@@ -17,6 +17,4 @@ func _get_scaled_radius() -> float:
 
 func _on_door_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
-		Globals.set_location(Globals.location.inside_mountain)
-		body.global_position = Globals.location_position()
-		body.camera.current = true
+		Globals.set_location(Globals.location.inside_mountain, body)

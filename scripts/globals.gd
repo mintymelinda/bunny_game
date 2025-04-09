@@ -16,26 +16,17 @@ enum location {
 	inside_mountain
 }
 
-func change_scene_to(scene: String, callback):
-	next_scene = scene
-	var loading = loading_screen.instantiate()
-	loading.scene_loaded.connect(callback)
-	if not loading.get_parent():
-		add_child(loading)
-		
-func set_return_address(position: Vector3):
-	return_address = position
-	
-func get_return_address() -> Vector3:
-	return return_address
-
 func get_location() -> location:
 	return current_location
 	
-func set_location(loc: location):
+func set_location(loc: location, player):
 	if current_location != loc:
 		current_location = loc
-		location_changed.emit()
+		
+	#player.global_position = Globals.location_position()
+	#player.camera.current = true
+	
+	location_changed.emit(player)
 
 func location_position() -> Vector3:
 	match current_location:
@@ -48,9 +39,6 @@ func location_position() -> Vector3:
 		location.mountain:
 			return get_tree().get_first_node_in_group("mountain").get_node("SpawnMarker").global_position
 		location.inside_mountain:
-			if not get_tree().get_first_node_in_group("inside_mountain"):
-				get_tree().change_scene_to_packed(load("res://scenes/inside_mountain.tscn"))
-				
 			return get_tree().get_first_node_in_group("inside_mountain").get_node("SpawnMarker").global_position
 		_:
 			return Vector3.ZERO

@@ -1,12 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://d3yk4ldhquny2"]
+[gd_scene load_steps=13 format=3 uid="uid://d3yk4ldhquny2"]
 
 [ext_resource type="Script" uid="uid://dqqd0w60a4gh7" path="res://scripts/main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://h8bbwedunq3j" path="res://scenes/player.tscn" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://bcbe7xrr4ke32" path="res://scenes/gui.gd" id="2_tipki"]
+[ext_resource type="Script" uid="uid://bcbe7xrr4ke32" path="res://scripts/gui.gd" id="2_tipki"]
 [ext_resource type="Script" uid="uid://bm0yax28tn2cp" path="res://scripts/score_label.gd" id="6_272bh"]
 [ext_resource type="Script" uid="uid://2dp4ciirm1t4" path="res://scripts/position_label.gd" id="6_o6xl0"]
 [ext_resource type="Script" uid="uid://h8iihlsi5rew" path="res://scripts/combo_label.gd" id="7_272bh"]
 [ext_resource type="Script" uid="uid://cfeiiopjy622d" path="res://scripts/power_up_label.gd" id="7_tipki"]
+[ext_resource type="Script" uid="uid://crfbbht2yv8n3" path="res://scripts/scene_manager.gd" id="7_ya4ey"]
+[ext_resource type="PackedScene" uid="uid://cel8o1im6wrok" path="res://scenes/world.tscn" id="8_choun"]
+[ext_resource type="PackedScene" uid="uid://suas1nwnm42x" path="res://scenes/inside_mountain.tscn" id="9_ya4ey"]
+[ext_resource type="PackedScene" uid="uid://b02266olybyh0" path="res://scenes/inside_house.tscn" id="10_eb6dy"]
 
 [sub_resource type="Theme" id="Theme_5vw27"]
 default_font_size = 22
@@ -109,4 +113,18 @@ script = ExtResource("7_tipki")
 [node name="MapCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 122, 182.834, 118)
 
+[node name="SceneManager" type="Node" parent="."]
+script = ExtResource("7_ya4ey")
+
+[node name="World" parent="SceneManager" instance=ExtResource("8_choun")]
+
+[node name="InsideMountain" parent="SceneManager" instance=ExtResource("9_ya4ey")]
+
+[node name="InsideHouse" parent="SceneManager" instance=ExtResource("10_eb6dy")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+
+[connection signal="jump" from="Player" to="GUI" method="_on_player_jump"]
+[connection signal="moved" from="Player" to="GUI" method="_on_player_moved"]
+[connection signal="select_power_up" from="Player" to="GUI" method="_on_player_select_power_up"]

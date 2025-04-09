@@ -1,4 +1,4 @@
-extends AreaBase
+extends SeedableThing
 
 signal eaten
 

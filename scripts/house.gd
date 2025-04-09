@@ -1,4 +1,4 @@
-extends AreaBase
+extends SeedableThing
 
 func initialize(g):
 	super(g)
@@ -15,5 +15,4 @@ func get_coverage() -> float:
 
 func _on_outside_door_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
-		Globals.set_location(Globals.location.inside_house)
-		body.global_position = Globals.location_position()
+		Globals.set_location(Globals.location.inside_house, body)
