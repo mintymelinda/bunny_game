@@ -3,24 +3,24 @@
 [ext_resource type="Script" uid="uid://b1l6n3r7nyrnf" path="res://scripts/ground.gd" id="1_pybca"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yh8r4"]
-size = Vector3(60, 1, 60)
+size = Vector3(60, 2, 60)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lv0v5"]
 albedo_color = Color(0.307786, 0.549073, 0.175528, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lv0v5"]
 material = SubResource("StandardMaterial3D_lv0v5")
-size = Vector3(60, 1, 60)
+size = Vector3(60, 2, 60)
 
 [node name="Ground" type="StaticBody3D"]
 collision_layer = 4
 script = ExtResource("1_pybca")
 
 [node name="Area" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = SubResource("BoxShape3D_yh8r4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 mesh = SubResource("BoxMesh_lv0v5")
 skeleton = NodePath("")

@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cel8o1im6wrok"]
+[gd_scene load_steps=12 format=3 uid="uid://cel8o1im6wrok"]
 
 [ext_resource type="Script" uid="uid://cx25vi430tbv2" path="res://scripts/world.gd" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://ok33lwcgv5tu" path="res://scripts/sun.gd" id="2_jhx03"]
 [ext_resource type="PackedScene" uid="uid://iaaejylj60ah" path="res://scenes/tile_orchestrator.tscn" id="2_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://dk02u60juo0n4" path="res://scenes/food.tscn" id="3_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://cbefpwd3fimx5" path="res://scenes/seedable_area.tscn" id="3_qfnet"]
-[ext_resource type="PackedScene" uid="uid://b1lpgy0irvrwq" path="res://scenes/water.tscn" id="4_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://pq7a21877g3m" path="res://scenes/rock_3.tscn" id="4_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://ced8yx8qkd00e" path="res://scenes/tree.tscn" id="5_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://rkjn733jsc6" path="res://scenes/house.tscn" id="7_q5onr"]
@@ -56,9 +55,9 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 [node name="MountainArea" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
 enabled = true
 
-[node name="Trees" parent="TileOrchestrator/MountainArea" instance=ExtResource("5_w7kh3")]
-
 [node name="Mountain" parent="TileOrchestrator/MountainArea" instance=ExtResource("12_q5onr")]
+
+[node name="Trees" parent="TileOrchestrator/MountainArea" instance=ExtResource("5_w7kh3")]
 
 [node name="ForestTile" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
 enabled = true
@@ -67,8 +66,7 @@ enabled = true
 
 [node name="Water" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
 enabled = true
-
-[node name="Water" parent="TileOrchestrator/Water" instance=ExtResource("4_7r4gi")]
+use_ground = false
 
 [node name="RockLand" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -60)

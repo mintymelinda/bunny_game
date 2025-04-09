@@ -58,6 +58,6 @@ func _get_blank_tile():
 
 # moves the passed in tile to an offset of +z +x
 func _position_tile(tile, z, x) -> void:
-	var x_offset = x * tile.ground.area.shape.size.x
-	var z_offset = z * tile.ground.area.shape.size.z
+	var x_offset = x * tile.get_x()
+	var z_offset = z * tile.get_z()
 	tile.position = Vector3(x_offset, 0.0, z_offset)

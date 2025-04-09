@@ -21,5 +21,5 @@ normal_texture = SubResource("NoiseTexture2D_s3811")
 refraction_enabled = true
 refraction_scale = 0.61
 refraction_texture = SubResource("NoiseTexture2D_p1n2c")
-uv1_scale = Vector3(0.1, 0.1, 0.1)
+uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
