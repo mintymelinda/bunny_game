@@ -22,11 +22,7 @@ func get_location() -> location:
 func set_location(loc: location, player):
 	if current_location != loc:
 		current_location = loc
-		
-	#player.global_position = Globals.location_position()
-	#player.camera.current = true
-	
-	location_changed.emit(player)
+		location_changed.emit(player)
 
 func location_position() -> Vector3:
 	match current_location:

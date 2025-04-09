@@ -4,6 +4,7 @@ signal hit
 signal jump
 signal moved
 signal select_power_up
+signal ate(combo)
 
 @export var speed = 14
 @export var fall_acceleration = 75
@@ -85,6 +86,7 @@ func _physics_process(delta):
 			var food = collision.get_collider()
 			if Vector3.UP.dot(collision.get_normal()) > 0.1:
 				food.eat(combo)
+				ate.emit(combo)
 				bounce()
 				break
 		

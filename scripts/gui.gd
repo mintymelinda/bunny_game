@@ -11,3 +11,8 @@ func _on_player_moved(pos) -> void:
 
 func _on_player_select_power_up(power_up) -> void:
 	$Accent/PowerUpLabel._on_updated(power_up)
+
+
+func _on_player_ate(combo: Variant) -> void:
+	$Accent/ScoreLabel._on_food_eaten(combo)
+	$Accent/ComboLabel._on_food_eaten()

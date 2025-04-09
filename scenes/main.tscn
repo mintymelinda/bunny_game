@@ -125,6 +125,7 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 
+[connection signal="ate" from="Player" to="GUI" method="_on_player_ate"]
 [connection signal="jump" from="Player" to="GUI" method="_on_player_jump"]
 [connection signal="moved" from="Player" to="GUI" method="_on_player_moved"]
 [connection signal="select_power_up" from="Player" to="GUI" method="_on_player_select_power_up"]
