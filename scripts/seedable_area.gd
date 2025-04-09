@@ -32,34 +32,27 @@ func _ready() -> void:
 		if not water.is_inside_tree():
 			add_child(water)
 
-	_seed()
+	_seed(_get_surface())
+	
+func _get_surface() -> Node3D:
+	return ground if ground else water
 
-func _seed():
+func _seed(surface):
 	for maybeSeedableThing in get_children():
 		if maybeSeedableThing is SeedableThing:
 			var seedable_thing = maybeSeedableThing
-			seedable_thing.initialize(ground)
+			seedable_thing.initialize(surface)
 			for index in range(seedable_thing.get_coverage()):
 				seedable_thing = seedable_thing.duplicate()
-				seedable_thing.initialize(ground)
-				ground.add(seedable_thing)
+				seedable_thing.initialize(surface)
+				surface.add(seedable_thing)
 				add_child(seedable_thing)
 		
 			#free the template
 			seedable_thing.queue_free()
 			
 func get_x():
-	if ground:
-		return ground.world_x
-	elif water:
-		return water.world_x
-	else:
-		push_error("no surface")
+	return _get_surface().world_x
 
 func get_z():
-	if ground:
-		return ground.world_z
-	elif water:
-		return water.world_z
-	else:
-		push_error("no surface")
+	return _get_surface().world_z

@@ -46,7 +46,7 @@ random_placement = false
 enabled = true
 
 [node name="House" parent="TileOrchestrator/StartingArea" instance=ExtResource("7_q5onr")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -83.9598, 0, 0)
 size_scale = 2.0
 
 [node name="Trees" parent="TileOrchestrator/StartingArea" instance=ExtResource("5_w7kh3")]
@@ -58,11 +58,13 @@ enabled = true
 [node name="Mountain" parent="TileOrchestrator/MountainArea" instance=ExtResource("12_q5onr")]
 
 [node name="Trees" parent="TileOrchestrator/MountainArea" instance=ExtResource("5_w7kh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7337, 0, 0)
 
 [node name="ForestTile" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
 enabled = true
 
 [node name="Trees" parent="TileOrchestrator/ForestTile" instance=ExtResource("5_w7kh3")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="Water" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
 enabled = true

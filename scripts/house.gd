@@ -6,6 +6,7 @@ func initialize(g):
 	blocking_types = ["food", "water", "tree", "rock", "spawn"]
 	
 	#set_random_placement()
+	position = Vector3.ZERO
 
 func _get_scaled_radius() -> float:
 	return $House/Area.shape.radius * scale.x
