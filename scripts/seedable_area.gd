@@ -1,7 +1,7 @@
 extends Node3D
 class_name SeedableArea
 
-@export var enabled: bool = false
+@export var enabled: bool = true
 @export var use_ground = true
 @export var use_water = false
 
@@ -44,9 +44,3 @@ func _seed(surface):
 		
 			#free the template
 			seedable_thing.queue_free()
-			
-#func get_x():
-	#return _get_surface().world_x
-#
-#func get_z():
-	#return _get_surface().world_z
