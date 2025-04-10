@@ -1,5 +1,5 @@
-class_name SeedableThing
 extends Node3D
+class_name Seedable
 
 @export var density: float = 0.1
 @export var size_scale: float = 1.0
@@ -8,9 +8,9 @@ var blocking_types
 var ground
 
 func initialize(g):
-	scale.x = size_scale
-	scale.y = size_scale
-	scale.z = size_scale
+	scale.x = size_scale / g.get_parent().get_parent().scale.x
+	scale.y = size_scale / g.get_parent().get_parent().scale.y
+	scale.z = size_scale / g.get_parent().get_parent().scale.z
 	ground = g
 
 func set_random_rotate_y():

@@ -8,4 +8,5 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	rotate_x(2 * PI * delta * speed)
+	pass
+	#rotate_x(2 * PI * delta * speed)

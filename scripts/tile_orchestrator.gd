@@ -1,6 +1,7 @@
-extends Node3D
+extends SeedableArea
+class_name TileOrchestrator
 
-var tileable_areas: Array[Node3D]
+var tileable_areas: Array[SeedableArea]
 
 @export var pad_tiles: int = 2
 @export var random_placement: bool = false
@@ -8,17 +9,18 @@ var tileable_areas: Array[Node3D]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for child in get_children():
-		if child.enabled:
-			if child != $FillerArea:
-				tileable_areas.append(child)
-	
+		if child is SeedableArea and child.enabled:
+			tileable_areas.append(child)
+
 	if random_placement:
 		tileable_areas.shuffle()
 
 	if tileable_areas.size() > 0:
 		_place_tiles()
-		
-	$FillerArea.queue_free()
+	
+	$Ground.queue_free()
+	$Water.queue_free()
+	#$FillerArea.queue_free()
 
 # Calculates the square of `tilaeable_areas` 
 # used to calculate the size of the grid without padding
@@ -28,12 +30,6 @@ func _get_tiles_squared():
 # places tiles in a square configuration with $FillerArea to fill in any gaps
 func _place_tiles() -> void:
 	_place_tiles_squared()
-	
-#func _place_tiles_vertical_fill(z_fill) -> void:
-	#var index = 0
-	#var tiles = tileable_areas.size()
-	#for z in range(tiles + pad_tiles + pad_tiles)
-		
 
 func _place_tiles_squared():
 	var index = 0
@@ -62,14 +58,37 @@ func _place_tiles_squared():
 
 			_position_tile(tile, z, x)
 
+			if tile is TileOrchestrator and tile.enabled:
+				tile._place_tiles()
+
 # Creates a duplicate of $FillerArea
 func _get_blank_tile():
-	var tile = $FillerArea.duplicate()
+	var tile = SeedableArea.new()
+	if tile.use_ground:
+		tile.add_child($Ground.duplicate())
+	if tile.use_water:
+		tile.add_child($Water.duplicate())
+
 	add_child(tile)
 	return tile
-
+	
 # moves the passed in tile to an offset of +z +x
 func _position_tile(tile, z, x) -> void:
-	var x_offset = x * tile.get_x()
-	var z_offset = z * tile.get_z()
+	var x_offset = (x * get_x()) - (get_x() )
+	var z_offset = (z * get_z()) - (get_z() )
 	tile.position = Vector3(x_offset, 0.0, z_offset)
+
+func get_surface() -> Ground:
+	if get_node_or_null("Ground"):
+		return $Ground
+	
+	if get_node_or_null("Water"):
+		return $Water
+	
+	return null
+
+func get_x():
+	return get_surface().world_x
+
+func get_z():
+	return get_surface().world_z

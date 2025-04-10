@@ -1,12 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://iaaejylj60ah"]
+[gd_scene load_steps=2 format=3 uid="uid://iaaejylj60ah"]
 
 [ext_resource type="Script" uid="uid://bkyw28k01ex5w" path="res://scripts/tile_orchestrator.gd" id="1_li61a"]
-[ext_resource type="PackedScene" uid="uid://cbefpwd3fimx5" path="res://scenes/seedable_area.tscn" id="2_tdy5y"]
 
 [node name="TileOrchestrator" type="Node3D"]
 script = ExtResource("1_li61a")
 pad_tiles = 0
 random_placement = true
-
-[node name="FillerArea" parent="." instance=ExtResource("2_tdy5y")]
-enabled = true

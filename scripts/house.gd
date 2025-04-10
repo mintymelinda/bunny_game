@@ -1,4 +1,4 @@
-extends SeedableThing
+extends Seedable
 
 func initialize(g):
 	super(g)

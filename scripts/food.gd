@@ -1,4 +1,4 @@
-extends SeedableThing
+extends Seedable
 
 signal eaten
 

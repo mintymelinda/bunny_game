@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dhw5rnb7peehd"]
 
-[ext_resource type="Script" uid="uid://b1l6n3r7nyrnf" path="res://scripts/ground.gd" id="1_f4epa"]
+[ext_resource type="Script" uid="uid://ctrtqdnbxt0cb" path="res://scenes/ground_water.gd" id="1_f4epa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yh8r4"]
 size = Vector3(60, 1, 60)

@@ -1,10 +1,12 @@
 class_name Ground
 extends StaticBody3D
 
+@export var enabled = true
+
 @onready var area = $Area
-@onready var world_x = area.shape.size.x
-@onready var world_z = area.shape.size.z
-@onready var world_y = area.shape.size.y
+@onready var world_x = area.shape.size.x * scale.x
+@onready var world_z = area.shape.size.z * scale.z
+@onready var world_y = area.shape.size.y * scale.y
 @onready var MIN = Vector3(-world_x  / 2.0, world_y / 2.0, -world_z / 2.0)
 @onready var MAX = Vector3(world_x  / 2.0, world_y / 2.0, world_z / 2.0)
 
