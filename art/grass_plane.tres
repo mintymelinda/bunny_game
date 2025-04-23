@@ -1,0 +1,9 @@
+[gd_resource type="PlaneMesh" load_steps=2 format=3 uid="uid://ca88eaj7a5apk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_faato"]
+diffuse_mode = 3
+albedo_color = Color(0.415686, 0.615686, 0.223529, 1)
+
+[resource]
+material = SubResource("StandardMaterial3D_faato")
+size = Vector2(60, 60)

@@ -2,7 +2,6 @@ extends Node
 
 var saved_world_scene = "res://scenes/populated_world.tscn"
 
-@onready var player_camera = $Player/CameraPivot/Camera
 @onready var map_camera = $MapCamera
 @onready var player = $Player
 
@@ -10,7 +9,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("map"):
 		if map_camera.current:
 			$GUI.show()
-			player_camera.current = true
+			player.camera.current = true
 		else:
 			$GUI.hide()
 			map_camera.current = true

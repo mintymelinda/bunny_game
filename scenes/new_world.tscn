@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://c1na5ttc6gqgm"]
+
+[ext_resource type="PackedScene" uid="uid://dhotynm8kpirh" path="res://penguin_isle.tscn" id="2_ymo3x"]
+[ext_resource type="PackedScene" uid="uid://h8bbwedunq3j" path="res://scenes/player.tscn" id="7_06gsf"]
+[ext_resource type="Material" uid="uid://cg4w8x5r31lm2" path="res://scenes/ground_water.tres" id="8_idetp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cxqfx"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_v64bu"]
+sky_material = SubResource("ProceduralSkyMaterial_cxqfx")
+
+[sub_resource type="Environment" id="Environment_1k7cp"]
+background_mode = 2
+sky = SubResource("Sky_v64bu")
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_h34a4"]
+material = ExtResource("8_idetp")
+size = Vector3(360, 5, 360)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_06gsf"]
+size = Vector3(360, 5, 360)
+
+[node name="Test" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1k7cp")
+
+[node name="Player" parent="." instance=ExtResource("7_06gsf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -105.084, 26.0596, -96.3016)
+horizontal_sensitivity = 0.2
+vertical_sensitivity = 0.2
+max_zoom = 20.0
+
+[node name="PenguinIsle" parent="." instance=ExtResource("2_ymo3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -138.745, 1, -150.885)
+collision_layer = 4
+
+[node name="Water" type="StaticBody3D" parent="."]
+collision_layer = 4
+
+[node name="Area" type="MeshInstance3D" parent="Water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+mesh = SubResource("BoxMesh_h34a4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+shape = SubResource("BoxShape3D_06gsf")

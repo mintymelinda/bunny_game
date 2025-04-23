@@ -62,6 +62,7 @@ script = ExtResource("1_xsp3t")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0087, 0)
 
 [node name="Node3D" type="Node3D" parent="."]
+visible = false
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32321, 0)

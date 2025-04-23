@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bupm23n3swdwq"]
+
+[ext_resource type="Script" uid="uid://dw3yth4vst5yn" path="res://power_up_ring.gd" id="1_8fcgy"]
+[ext_resource type="PackedScene" uid="uid://dp420jsqrtp6m" path="res://PowerUpBlock.tscn" id="1_qlh4k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fcgy"]
+albedo_color = Color(0.371622, 0.371622, 0.371622, 1)
+roughness = 0.2
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 1.0
+
+[sub_resource type="TorusMesh" id="TorusMesh_urpou"]
+material = SubResource("StandardMaterial3D_8fcgy")
+inner_radius = 2.9
+outer_radius = 3.0
+rings = 128
+ring_segments = 64
+
+[node name="PowerUpRing" type="Node3D"]
+script = ExtResource("1_8fcgy")
+
+[node name="Ring" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("TorusMesh_urpou")
+
+[node name="PowerUpBlock" parent="." instance=ExtResource("1_qlh4k")]

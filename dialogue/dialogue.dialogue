@@ -1,0 +1,11 @@
+~ test_dialog
+Mindy: [[Hi|Hello|Howdy]] Toots, this is some dialogue.
+Mindy: Here are some choices.
+- First one
+	Mindy: You picked the first one.
+- Second one
+	Mindy: You picked the second one.
+- Start again => test_dialog
+- End the conversation => END
+Mindy: For more information see the online documentation.
+=> END

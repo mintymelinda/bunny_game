@@ -1,4 +1,4 @@
-extends Seedable
+extends SeedableThing
 
 func initialize(g):
 	super(g)
@@ -18,3 +18,8 @@ func _get_scaled_radius() -> float:
 func _on_door_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		Globals.set_location(Globals.location.inside_mountain, body)
+
+
+func _on_penguin_bouncer_body_entered(body: Node3D) -> void:
+	if body is SeedableCharacter:
+		body.reverse_direction()

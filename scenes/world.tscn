@@ -1,14 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://cel8o1im6wrok"]
+[gd_scene load_steps=14 format=3 uid="uid://cel8o1im6wrok"]
 
 [ext_resource type="Script" uid="uid://cx25vi430tbv2" path="res://scripts/world.gd" id="1_f3sb7"]
-[ext_resource type="Script" uid="uid://ok33lwcgv5tu" path="res://scripts/sun.gd" id="2_jhx03"]
 [ext_resource type="PackedScene" uid="uid://iaaejylj60ah" path="res://scenes/tile_orchestrator.tscn" id="2_w7kh3"]
-[ext_resource type="PackedScene" uid="uid://dk02u60juo0n4" path="res://scenes/food.tscn" id="3_4mrxx"]
+[ext_resource type="Script" uid="uid://b1l6n3r7nyrnf" path="res://scripts/ground.gd" id="3_i7141"]
 [ext_resource type="PackedScene" uid="uid://cbefpwd3fimx5" path="res://scenes/seedable_area.tscn" id="3_qfnet"]
-[ext_resource type="PackedScene" uid="uid://pq7a21877g3m" path="res://scenes/rock_3.tscn" id="4_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://ced8yx8qkd00e" path="res://scenes/tree.tscn" id="5_w7kh3"]
+[ext_resource type="PackedScene" uid="uid://dhotynm8kpirh" path="res://scenes/penguin_isle.tscn" id="7_i7141"]
 [ext_resource type="PackedScene" uid="uid://rkjn733jsc6" path="res://scenes/house.tscn" id="7_q5onr"]
-[ext_resource type="PackedScene" uid="uid://bhn8noh6m1wtn" path="res://scenes/mountain.tscn" id="12_q5onr"]
+[ext_resource type="PackedScene" uid="uid://ccnc85xdsyxwb" path="res://scenes/ground.tscn" id="8_4mrxx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
 albedo_color = Color(0.410382, 0.778188, 0.951627, 1)
@@ -19,169 +18,73 @@ flip_faces = true
 radius = 1000.0
 height = 2000.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_idetp"]
+albedo_color = Color(2.52686e-07, 0.388968, 0.143919, 1)
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_qfnet"]
+material = SubResource("StandardMaterial3D_idetp")
+size = Vector3(120, 1, 120)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i7141"]
+size = Vector3(120, 1, 120)
+
 [node name="World" type="Node3D"]
 script = ExtResource("1_f3sb7")
 
 [node name="FoodTimer" type="Timer" parent="."]
 wait_time = 33.83
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 72.1785, 0)
-shadow_enabled = true
-script = ExtResource("2_jhx03")
-speed = 0.01
-
 [node name="Sky" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -90)
 mesh = SubResource("SphereMesh_4mrxx")
 
-[node name="AutoSave" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
-
 [node name="TileOrchestrator" parent="." instance=ExtResource("2_w7kh3")]
 
-[node name="StartingArea" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+[node name="Ground2" type="StaticBody3D" parent="TileOrchestrator"]
+collision_layer = 4
+script = ExtResource("3_i7141")
 
-[node name="House" parent="TileOrchestrator/StartingArea" instance=ExtResource("7_q5onr")]
+[node name="Area" type="MeshInstance3D" parent="TileOrchestrator/Ground2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_qfnet")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TileOrchestrator/Ground2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_i7141")
+
+[node name="StartingArea" parent="TileOrchestrator/Ground2" instance=ExtResource("3_qfnet")]
+
+[node name="House" parent="TileOrchestrator/Ground2/StartingArea" instance=ExtResource("7_q5onr")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -83.9598, 0, 0)
 size_scale = 2.0
 
-[node name="Trees" parent="TileOrchestrator/StartingArea" instance=ExtResource("5_w7kh3")]
+[node name="Trees" parent="TileOrchestrator/Ground2/StartingArea" instance=ExtResource("5_w7kh3")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+size_scale = 3.0
 
-[node name="MountainArea" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+[node name="Ground3" type="StaticBody3D" parent="TileOrchestrator"]
+collision_layer = 4
+script = ExtResource("3_i7141")
 
-[node name="Mountain" parent="TileOrchestrator/MountainArea" instance=ExtResource("12_q5onr")]
+[node name="Area" type="MeshInstance3D" parent="TileOrchestrator/Ground3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_qfnet")
+skeleton = NodePath("../..")
 
-[node name="Trees" parent="TileOrchestrator/MountainArea" instance=ExtResource("5_w7kh3")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TileOrchestrator/Ground3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_i7141")
+
+[node name="MountainArea" parent="TileOrchestrator/Ground3" instance=ExtResource("3_qfnet")]
+
+[node name="Trees" parent="TileOrchestrator/Ground3/MountainArea" instance=ExtResource("5_w7kh3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7337, 0, 0)
+size_scale = 3.0
 
-[node name="ForestTile" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
+[node name="PenguinIsle" parent="TileOrchestrator" instance=ExtResource("7_i7141")]
+collision_layer = 4
 
-[node name="Trees" parent="TileOrchestrator/ForestTile" instance=ExtResource("5_w7kh3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="ForestTile2" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-
-[node name="Trees" parent="TileOrchestrator/ForestTile2" instance=ExtResource("5_w7kh3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="MiddleForest" parent="TileOrchestrator" instance=ExtResource("2_w7kh3")]
-transform = Transform3D(0.34, 0, 0, 0, 0.34, 0, 0, 0, 0.34, 0, 0, 0)
-use_water = true
-
-[node name="Forest" parent="TileOrchestrator/MiddleForest" instance=ExtResource("3_qfnet")]
-
-[node name="Trees2" parent="TileOrchestrator/MiddleForest/Forest" instance=ExtResource("5_w7kh3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="WaterArea" parent="TileOrchestrator/MiddleForest" instance=ExtResource("3_qfnet")]
-use_ground = false
-use_water = true
-
-[node name="Forest2" parent="TileOrchestrator/MiddleForest" instance=ExtResource("3_qfnet")]
-
-[node name="Trees3" parent="TileOrchestrator/MiddleForest/Forest2" instance=ExtResource("5_w7kh3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="Forest3" parent="TileOrchestrator/MiddleForest" instance=ExtResource("3_qfnet")]
-
-[node name="Trees4" parent="TileOrchestrator/MiddleForest/Forest3" instance=ExtResource("5_w7kh3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="Checker" parent="TileOrchestrator/MiddleForest" instance=ExtResource("2_w7kh3")]
-transform = Transform3D(0.34, 0, 0, 0, 0.34, 0, 0, 0, 0.34, 0, 0, 0)
-
-[node name="MiddleTile2" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-
-[node name="MiddleTile3" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-use_ground = false
-use_water = true
-
-[node name="MiddleTile4" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-
-[node name="MiddleTile5" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-use_ground = false
-use_water = true
-
-[node name="MiddleTile6" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-
-[node name="MiddleTile7" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-use_ground = false
-use_water = true
-
-[node name="MiddleTile8" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-
-[node name="MiddleTile9" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-use_ground = false
-use_water = true
-
-[node name="MiddleTile" parent="TileOrchestrator/MiddleForest/Checker" instance=ExtResource("3_qfnet")]
-
-[node name="Forest4" parent="TileOrchestrator/MiddleForest" instance=ExtResource("3_qfnet")]
-
-[node name="Trees5" parent="TileOrchestrator/MiddleForest/Forest4" instance=ExtResource("5_w7kh3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="Forest5" parent="TileOrchestrator/MiddleForest" instance=ExtResource("3_qfnet")]
-
-[node name="Trees6" parent="TileOrchestrator/MiddleForest/Forest5" instance=ExtResource("5_w7kh3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="WaterArea3" parent="TileOrchestrator/MiddleForest" instance=ExtResource("3_qfnet")]
-use_ground = false
-use_water = true
-
-[node name="Forest6" parent="TileOrchestrator/MiddleForest" instance=ExtResource("3_qfnet")]
-
-[node name="Trees7" parent="TileOrchestrator/MiddleForest/Forest6" instance=ExtResource("5_w7kh3")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-
-[node name="RockLand" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, -60)
-
-[node name="Rock" parent="TileOrchestrator/RockLand" instance=ExtResource("4_w7kh3")]
-
-[node name="WaterArea" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-use_ground = false
-use_water = true
-
-[node name="FoodLand" parent="TileOrchestrator" instance=ExtResource("3_qfnet")]
-
-[node name="Food" parent="TileOrchestrator/FoodLand" instance=ExtResource("3_4mrxx")]
-
-[node name="TileOrchestrator" parent="TileOrchestrator" instance=ExtResource("2_w7kh3")]
-transform = Transform3D(0.34, 0, 0, 0, 0.34, 0, 0, 0, 0.34, 0, 0, 0)
-placement = 3
-
-[node name="SeedableArea" parent="TileOrchestrator/TileOrchestrator" instance=ExtResource("3_qfnet")]
-
-[node name="Rock" parent="TileOrchestrator/TileOrchestrator/SeedableArea" instance=ExtResource("4_w7kh3")]
-
-[node name="SeedableArea2" parent="TileOrchestrator/TileOrchestrator" instance=ExtResource("3_qfnet")]
-
-[node name="Tree" parent="TileOrchestrator/TileOrchestrator/SeedableArea2" instance=ExtResource("5_w7kh3")]
-
-[node name="SeedableArea3" parent="TileOrchestrator/TileOrchestrator" instance=ExtResource("3_qfnet")]
-
-[node name="Food" parent="TileOrchestrator/TileOrchestrator/SeedableArea3" instance=ExtResource("3_4mrxx")]
-
-[node name="TileOrchestrator2" parent="TileOrchestrator" instance=ExtResource("2_w7kh3")]
-transform = Transform3D(0.34, 0, 0, 0, 0.34, 0, 0, 0, 0.34, 0, 0, 0)
-placement = 2
-
-[node name="SeedableArea" parent="TileOrchestrator/TileOrchestrator2" instance=ExtResource("3_qfnet")]
-
-[node name="Rock" parent="TileOrchestrator/TileOrchestrator2/SeedableArea" instance=ExtResource("4_w7kh3")]
-
-[node name="SeedableArea2" parent="TileOrchestrator/TileOrchestrator2" instance=ExtResource("3_qfnet")]
-
-[node name="Tree" parent="TileOrchestrator/TileOrchestrator2/SeedableArea2" instance=ExtResource("5_w7kh3")]
-
-[node name="SeedableArea3" parent="TileOrchestrator/TileOrchestrator2" instance=ExtResource("3_qfnet")]
-
-[node name="Food" parent="TileOrchestrator/TileOrchestrator2/SeedableArea3" instance=ExtResource("3_4mrxx")]
+[node name="Ground" parent="TileOrchestrator" instance=ExtResource("8_4mrxx")]
 
 [connection signal="timeout" from="FoodTimer" to="." method="_on_food_timer_timeout"]
-[connection signal="timeout" from="AutoSave" to="." method="_on_timer_timeout"]

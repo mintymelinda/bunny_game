@@ -38,5 +38,3 @@ func location_position() -> Vector3:
 			return get_tree().get_first_node_in_group("inside_mountain").get_node("SpawnMarker").global_position
 		_:
 			return Vector3.ZERO
-		
-			

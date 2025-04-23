@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://dhotynm8kpirh"]
+
+[ext_resource type="Script" uid="uid://b1l6n3r7nyrnf" path="res://scripts/ground.gd" id="1_0qx3y"]
+[ext_resource type="PackedScene" uid="uid://bhn8noh6m1wtn" path="res://scenes/mountain.tscn" id="2_k1yxi"]
+[ext_resource type="PackedScene" uid="uid://cbefpwd3fimx5" path="res://scenes/seedable_area.tscn" id="3_n2x3p"]
+[ext_resource type="PackedScene" uid="uid://c7uup85jljw1p" path="res://scenes/pengu.tscn" id="4_e3bn6"]
+[ext_resource type="PackedScene" uid="uid://b1uextkdufrlr" path="res://scenes/pine.tscn" id="5_xc7tm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0qx3y"]
+albedo_color = Color(0.998938, 0.999577, 0.994141, 1)
+roughness = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_o61je"]
+material = SubResource("StandardMaterial3D_0qx3y")
+size = Vector3(120, 1, 120)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h34a4"]
+size = Vector3(120, 1, 120)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_neo0p"]
+size = Vector3(120, 1, 120)
+
+[node name="PenguinIsle" type="StaticBody3D"]
+script = ExtResource("1_0qx3y")
+
+[node name="Area" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_o61je")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_h34a4")
+
+[node name="Mountain" parent="." instance=ExtResource("2_k1yxi")]
+transform = Transform3D(0.765842, 0, 0.643028, 0, 1, 0, -0.643028, 0, 0.765842, -32.027, 0, -12.139)
+
+[node name="SeedableArea" parent="." instance=ExtResource("3_n2x3p")]
+
+[node name="Pengu" parent="SeedableArea" instance=ExtResource("4_e3bn6")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+quantity = 20
+density = 0.001
+size_scale = 0.5
+
+[node name="Pine" parent="SeedableArea" instance=ExtResource("5_xc7tm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.712689, 6.02241)
+size_scale = 2.0
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 260
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_neo0p")
+
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

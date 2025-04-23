@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://rx5fslmlgemx"]
+
+[ext_resource type="PackedScene" uid="uid://c1uaimfj57ma4" path="res://art/penguin_w_texture_w_walk.glb" id="1_lrylk"]
+
+[node name="penguin_w_texture_w_walk" instance=ExtResource("1_lrylk")]

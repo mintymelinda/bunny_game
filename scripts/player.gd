@@ -6,6 +6,9 @@ signal moved
 signal select_power_up
 signal ate(combo)
 
+@export var max_camera_angle = 80.0
+@export var min_camera_angle = -22.0
+
 @export var speed = 14
 @export var fall_acceleration = 75
 @export var jump_impulse = 20
@@ -14,7 +17,18 @@ signal ate(combo)
 @export var slam_impulse = 64
 @export var rotation_speed = 2
 
-@onready var camera = $CameraPivot/Camera
+@export var horizontal_sensitivity = 0.5
+@export var vertical_sensitivity = 0.5
+var zoom_factor = 0
+@export var zoom_factors = [0.5, 1.0, 5.0]
+@export var min_zoom = 2.0
+@export var max_zoom = 80.0
+
+@onready var animation_player = $Pivot/Character/AnimationPlayer
+@onready var camera = $SpringArm3D/CameraPivot/Camera
+@onready var camera_pivot = $SpringArm3D/CameraPivot
+@onready var spring_arm = $SpringArm3D
+@onready var visuals = $Pivot
 
 var selected_power_up = "none"
 var power_ups: Array = [selected_power_up]
@@ -23,48 +37,81 @@ var last_position
 var target_velocity = Vector3.ZERO
 var combo = 0
 
-func _physics_process(delta):
-	var direction = Vector3.ZERO
+var direction = Vector3.ZERO
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	## debug shortcut to reload environment
+func _input(event: InputEvent) -> void:
+	if not camera.current:
+		rotate_y(deg_to_rad(0))
+		return
+
+	if event is InputEventMouseMotion:
+		rotate_y(deg_to_rad(-event.relative.x * horizontal_sensitivity))
+		visuals.rotate_y(deg_to_rad(event.relative.x * horizontal_sensitivity))
+		
+		camera_pivot.rotate_x(deg_to_rad(-event.relative.y * vertical_sensitivity))
+		
+		# lock y and z, clamp x
+		var camera_rotation = camera_pivot.rotation_degrees
+		camera_rotation.x = clampf(camera_rotation.x, min_camera_angle, max_camera_angle)
+		camera_rotation.y = clampf(camera_rotation.y, 0, 0)
+		camera_rotation.z = clampf(camera_rotation.z, 0, 0)
+		camera_pivot.rotation_degrees = camera_rotation
+	
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			if event.button_index == MOUSE_BUTTON_MIDDLE:
+				zoom_factor += 1
+				if zoom_factor >= zoom_factors.size():
+					zoom_factor = 0
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				spring_arm.spring_length -= zoom_factors[zoom_factor]
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				spring_arm.spring_length += zoom_factors[zoom_factor]
+				
+			spring_arm.spring_length = clampf(spring_arm.spring_length, min_zoom, max_zoom)
+
+func _unhandled_input(event: InputEvent) -> void:
+	# debug shortcut to reload environment
 	if Input.is_action_just_pressed("butt_slam"):
 		die()
-
-	if Input.is_action_pressed("move_right"):
-		direction.x += 1
-	if Input.is_action_pressed("move_left"):
-		direction.x -= 1
-	if Input.is_action_pressed("move_back"):
-		direction.z += 1
-	if Input.is_action_pressed("move_forward"):
-		direction.z -= 1
+	
+	# change items
 	if Input.is_action_just_pressed("item"):
 		get_next_item()
-		
-	if direction != Vector3.ZERO:
-		direction = direction.normalized()
-		$Pivot.basis = Basis.looking_at(direction)
-		$Pivot/Character/AnimationPlayer.speed_scale = 4
+
+	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if Input.is_action_just_pressed("jump"):
+		combo = max(1, combo - 1)
+		target_velocity.y = jump_impulse * (1 + combo) * 0.5
+		jump.emit()
+
+func _physics_process(delta):
+	if direction:
+		visuals.look_at(global_position + direction)
+		animation_player.speed_scale = 4
 	else:
-		$Pivot/Character/AnimationPlayer.speed_scale = 1
+		animation_player.speed_scale = 1
 		
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
 	
 	if is_on_floor():
-		if direction != Vector3.ZERO:
-			$Pivot/Character/AnimationPlayer.play("walk")
+		if direction:
+			if animation_player.current_animation != "walk":
+				animation_player.play("walk")
 		else:
-			$Pivot/Character/AnimationPlayer.play("stand")
-			
-		if Input.is_action_just_pressed("jump"):
-			combo = max(1, combo - 1)
-			target_velocity.y = jump_impulse * (1 + combo) * 0.5
-			jump.emit()
-	
+			if animation_player.current_animation != "stand":
+				animation_player.play("stand")
+
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
-		$Pivot/Character/AnimationPlayer.play("fly")
+		if animation_player.current_animation != "fly":
+			animation_player.play("fly")
 		
 	for index in range(get_slide_collision_count()):
 		var collision = get_slide_collision(index)

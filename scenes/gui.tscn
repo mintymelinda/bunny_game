@@ -1,0 +1,138 @@
+[gd_scene load_steps=8 format=3 uid="uid://e4r706ldw805"]
+
+[ext_resource type="Script" uid="uid://bcbe7xrr4ke32" path="res://scripts/gui.gd" id="1_jf511"]
+[ext_resource type="Script" uid="uid://bm0yax28tn2cp" path="res://scripts/score_label.gd" id="2_0wv8u"]
+[ext_resource type="Script" uid="uid://h8iihlsi5rew" path="res://scripts/combo_label.gd" id="3_67jta"]
+[ext_resource type="Script" uid="uid://2dp4ciirm1t4" path="res://scripts/position_label.gd" id="4_p8208"]
+[ext_resource type="Script" uid="uid://cfeiiopjy622d" path="res://scripts/power_up_label.gd" id="5_axmix"]
+[ext_resource type="PackedScene" uid="uid://bupm23n3swdwq" path="res://power_up_ring.tscn" id="6_7u6ry"]
+
+[sub_resource type="Theme" id="Theme_5vw27"]
+default_font_size = 22
+
+[node name="GUI" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_5vw27")
+script = ExtResource("1_jf511")
+
+[node name="Retry" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.372549)
+
+[node name="Label" type="Label" parent="Control/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -109.5
+offset_top = -14.0
+offset_right = 109.5
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press Enter to retry."
+
+[node name="Accent" type="ColorRect" parent="Control"]
+layout_mode = 1
+offset_left = 100.0
+offset_top = 50.0
+offset_right = 315.0
+offset_bottom = 156.0
+color = Color(0, 0, 0, 0.372549)
+
+[node name="ScoreLabel" type="Label" parent="Control/Accent"]
+layout_mode = 1
+offset_right = 223.0
+offset_bottom = 31.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Score: 0"
+script = ExtResource("2_0wv8u")
+
+[node name="ComboLabel" type="Label" parent="Control/Accent"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+offset_right = 131.0
+offset_bottom = 1.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Combo: 0"
+script = ExtResource("3_67jta")
+
+[node name="PositionLabel" type="Label" parent="Control/Accent"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -109.0
+offset_right = 146.0
+offset_bottom = -72.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Position: 0,0,0"
+script = ExtResource("4_p8208")
+
+[node name="PowerUpLabel" type="Label" parent="Control/Accent"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -69.0
+offset_right = 168.0
+offset_bottom = -38.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Power Up: none"
+script = ExtResource("5_axmix")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 63.0
+offset_top = 90.0
+offset_right = 343.0
+offset_bottom = 292.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/SubViewportContainer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(280, 202)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="Control/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+
+[node name="PowerUpRing" parent="Control/SubViewportContainer/SubViewport/Node3D" instance=ExtResource("6_7u6ry")]
+
+[node name="Camera3D" type="Camera3D" parent="Control/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Control/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.843536, -0.527748, -0.0996442, 0.536838, 0.834016, 0.127372, 0.0158846, -0.160935, 0.986837, 0, 0, -1.08995)
