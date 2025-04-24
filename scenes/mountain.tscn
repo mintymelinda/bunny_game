@@ -67,6 +67,8 @@ transform = Transform3D(0.999994, 5.4948e-08, 4.5686e-05, 1.42492e-07, 0.99999, 
 shape = SubResource("CylinderShape3D_cpw5w")
 
 [node name="PenguinBouncer" type="Area3D" parent="Mountain"]
+collision_layer = 4
+collision_mask = 257
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Mountain/PenguinBouncer"]
 transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, -0.0333123, 0)

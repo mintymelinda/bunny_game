@@ -23,6 +23,8 @@ radius = 0.777976
 [node name="PowerUp" type="RigidBody3D" groups=["power_up"]]
 gravity_scale = 0.0
 script = ExtResource("1_j7my0")
+speed = null
+power_up_name = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_a6us8")

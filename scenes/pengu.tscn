@@ -1,14 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7uup85jljw1p"]
+[gd_scene load_steps=7 format=3 uid="uid://c7uup85jljw1p"]
 
 [ext_resource type="Script" uid="uid://c4vcsn8ji6euo" path="res://scripts/penguin.gd" id="1_0e0b4"]
+[ext_resource type="PackedScene" uid="uid://binl30ltubfnh" path="res://art/penguin_two_point_oh.glb" id="2_4hnfy"]
 [ext_resource type="PackedScene" uid="uid://cem017kh7k78h" path="res://art/penguin.glb" id="2_cd7f6"]
-[ext_resource type="PackedScene" uid="uid://bgsis743tcwe5" path="res://scenes/penguin.tscn" id="2_xbu2u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_idetp"]
-radius = 1.10982
-height = 3.29544
+radius = 0.959654
+height = 3.41971
 
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_xbu2u"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4hnfy"]
+height = 4.48071
+radius = 7.19043
 
 [node name="Pengu" type="CharacterBody3D"]
 collision_layer = 256
@@ -16,10 +20,9 @@ collision_mask = 5
 script = ExtResource("1_0e0b4")
 speed = 3.0
 
-[node name="Character" parent="." instance=ExtResource("2_cd7f6")]
+[node name="Character" parent="." instance=ExtResource("2_4hnfy")]
 
-[node name="CharacterBackup" parent="." instance=ExtResource("2_xbu2u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.012897, 0)
+[node name="CharacterBackup" parent="." instance=ExtResource("2_cd7f6")]
 visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -34,3 +37,22 @@ spring_length = 8.0
 [node name="CameraPivot" type="Node3D" parent="SpringArm3D"]
 
 [node name="Camera" type="Camera3D" parent="SpringArm3D/CameraPivot"]
+
+[node name="CollisionArea" type="Area3D" parent="."]
+collision_layer = 256
+collision_mask = 260
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55987, 0)
+shape = SubResource("CapsuleShape3D_idetp")
+
+[node name="StopAndWave" type="Area3D" parent="."]
+collision_layer = 8192
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StopAndWave"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24036, 0)
+shape = SubResource("CylinderShape3D_4hnfy")
+
+[connection signal="body_entered" from="CollisionArea" to="." method="_on_collision_area_body_entered"]
+[connection signal="body_entered" from="StopAndWave" to="." method="_on_stop_and_wave_body_entered"]
+[connection signal="body_exited" from="StopAndWave" to="." method="_on_stop_and_wave_body_exited"]

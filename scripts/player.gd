@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 signal hit
 signal jump
@@ -29,6 +30,8 @@ var zoom_factor = 0
 @onready var camera_pivot = $SpringArm3D/CameraPivot
 @onready var spring_arm = $SpringArm3D
 @onready var visuals = $Pivot
+
+var interacting_with
 
 var selected_power_up = "none"
 var power_ups: Array = [selected_power_up]
@@ -62,6 +65,10 @@ func _input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton:
 		if event.is_pressed():
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				if interacting_with:
+					DialogueManager.show_dialogue_balloon(interacting_with.resource, interacting_with.location)
+
 			if event.button_index == MOUSE_BUTTON_MIDDLE:
 				zoom_factor += 1
 				if zoom_factor >= zoom_factors.size():
@@ -70,7 +77,7 @@ func _input(event: InputEvent) -> void:
 				spring_arm.spring_length -= zoom_factors[zoom_factor]
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				spring_arm.spring_length += zoom_factors[zoom_factor]
-				
+
 			spring_arm.spring_length = clampf(spring_arm.spring_length, min_zoom, max_zoom)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -86,9 +93,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if Input.is_action_just_pressed("jump"):
-		combo = max(1, combo - 1)
-		target_velocity.y = jump_impulse * (1 + combo) * 0.5
-		jump.emit()
+		var interactions = $Pivot/InteractionFinder.get_overlapping_areas()
+		if interactions.size() > 0:
+			interactions[0].action()
+		else:
+			combo = max(1, combo - 1)
+			target_velocity.y = jump_impulse * (1 + combo) * 0.5
+			jump.emit()
 
 func _physics_process(delta):
 	if direction:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cel8o1im6wrok"]
+[gd_scene load_steps=18 format=3 uid="uid://cel8o1im6wrok"]
 
 [ext_resource type="Script" uid="uid://cx25vi430tbv2" path="res://scripts/world.gd" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://iaaejylj60ah" path="res://scenes/tile_orchestrator.tscn" id="2_w7kh3"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://dhotynm8kpirh" path="res://scenes/penguin_isle.tscn" id="7_i7141"]
 [ext_resource type="PackedScene" uid="uid://rkjn733jsc6" path="res://scenes/house.tscn" id="7_q5onr"]
 [ext_resource type="PackedScene" uid="uid://ccnc85xdsyxwb" path="res://scenes/ground.tscn" id="8_4mrxx"]
+[ext_resource type="PackedScene" uid="uid://c7uup85jljw1p" path="res://scenes/pengu.tscn" id="8_w7kh3"]
+[ext_resource type="Resource" uid="uid://dh070oe4eyjq7" path="res://dialogue/toots.dialogue" id="9_e3hyu"]
+[ext_resource type="PackedScene" uid="uid://bjxhx0tqows8w" path="res://scenes/Interaction.tscn" id="11_e3hyu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o6xl0"]
 albedo_color = Color(0.410382, 0.778188, 0.951627, 1)
@@ -28,6 +31,10 @@ size = Vector3(120, 1, 120)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i7141"]
 size = Vector3(120, 1, 120)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_q5onr"]
+height = 4.27197
+radius = 2.80225
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_f3sb7")
@@ -82,9 +89,21 @@ shape = SubResource("BoxShape3D_i7141")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7337, 0, 0)
 size_scale = 3.0
 
+[node name="Ground" parent="TileOrchestrator" instance=ExtResource("8_4mrxx")]
+
 [node name="PenguinIsle" parent="TileOrchestrator" instance=ExtResource("7_i7141")]
 collision_layer = 4
 
-[node name="Ground" parent="TileOrchestrator" instance=ExtResource("8_4mrxx")]
+[node name="Pengu" parent="TileOrchestrator/PenguinIsle" instance=ExtResource("8_w7kh3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.48975, -1.15796, 0)
+random = false
+
+[node name="InteractionArea" parent="TileOrchestrator/PenguinIsle/Pengu" instance=ExtResource("11_e3hyu")]
+dialog_resource = ExtResource("9_e3hyu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TileOrchestrator/PenguinIsle/Pengu/InteractionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13599, 2.12645)
+shape = SubResource("CylinderShape3D_q5onr")
 
 [connection signal="timeout" from="FoodTimer" to="." method="_on_food_timer_timeout"]
+[connection signal="body_entered" from="TileOrchestrator/PenguinIsle/Pengu/InteractionArea" to="." method="_on_interaction_area_body_entered"]

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dh070oe4eyjq7"
+path="res://.godot/imported/toots.dialogue-6c91bbfa17cad9c7e82dc999a6785e13.tres"
+
+[deps]
+
+source_file="res://dialogue/toots.dialogue"
+dest_files=["res://.godot/imported/toots.dialogue-6c91bbfa17cad9c7e82dc999a6785e13.tres"]
+
+[params]
+
+defaults=true

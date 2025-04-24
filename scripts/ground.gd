@@ -62,5 +62,9 @@ func add(node):
 
 
 func _on_area_3d_body_exited(body: Node3D) -> void:
-	if body is SeedableCharacter:
-		body.direction = body.direction * -1
+	if body is Penguin:
+		body.reverse_direction()
+
+
+func _on_area_3d_2_body_entered(body: Node3D) -> void:
+	pass # Replace with function body.
