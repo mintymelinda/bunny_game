@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d3yk4ldhquny2"]
+[gd_scene load_steps=10 format=3 uid="uid://d3yk4ldhquny2"]
 
 [ext_resource type="Script" uid="uid://dqqd0w60a4gh7" path="res://scripts/main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://h8bbwedunq3j" path="res://scenes/player.tscn" id="1_ig7tw"]
@@ -7,10 +7,19 @@
 [ext_resource type="PackedScene" uid="uid://cel8o1im6wrok" path="res://scenes/world.tscn" id="8_choun"]
 [ext_resource type="PackedScene" uid="uid://suas1nwnm42x" path="res://scenes/inside_mountain.tscn" id="9_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://b02266olybyh0" path="res://scenes/inside_house.tscn" id="10_eb6dy"]
-[ext_resource type="PackedScene" uid="uid://bmctsvpx0xfb5" path="res://scenes/world_environment.tscn" id="12_eb6dy"]
+
+[sub_resource type="Sky" id="Sky_o6xl0"]
+
+[sub_resource type="Environment" id="Environment_tipki"]
+background_mode = 2
+sky = SubResource("Sky_o6xl0")
+sky_custom_fov = 56.3
 
 [node name="Main" type="Node"]
 script = ExtResource("1_h2yge")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tipki")
 
 [node name="GUI" parent="." instance=ExtResource("2_tipki")]
 
@@ -28,6 +37,4 @@ script = ExtResource("7_ya4ey")
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4129, 1.33864, 20.2069)
-
-[node name="WorldEnvironment2" parent="." instance=ExtResource("12_eb6dy")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -26.4129, 1.33864, 20.2069)

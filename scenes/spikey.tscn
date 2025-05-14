@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwb1kl16o0n5s"]
+
+[ext_resource type="PackedScene" uid="uid://bpgpppeqeo03w" path="res://art/spikey.glb" id="1_b0ysg"]
+[ext_resource type="Script" uid="uid://qldmnum02cwd" path="res://scripts/spikey.gd" id="2_53mpt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b0ysg"]
+albedo_color = Color(0.361575, 0.361575, 0.361575, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_53mpt"]
+height = 0.672607
+radius = 2.02441
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_q2611"]
+height = 5.30966
+radius = 20.7197
+
+[node name="Spikey" type="CharacterBody3D"]
+script = ExtResource("2_53mpt")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="Character" parent="Pivot" instance=ExtResource("1_b0ysg")]
+
+[node name="Cylinder" parent="Pivot/Character" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_b0ysg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(9.2388, 0, -3.82683, 0, 10, 0, 3.82683, 0, 9.2388, 0, 0.565186, 0)
+shape = SubResource("CylinderShape3D_53mpt")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.663589, 0)
+shape = SubResource("CylinderShape3D_q2611")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+
+[editable path="Pivot/Character"]

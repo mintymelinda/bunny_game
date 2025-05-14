@@ -5,6 +5,12 @@ class_name SeedableCharacter
 @export var density: float = 0.1
 @export var size_scale: float = 1.0
 
+@export var speed = 2.0
+
+@export var random: bool = true
+@export var direction: Vector3
+
+
 var blocking_types
 var ground
 
@@ -13,6 +19,14 @@ func initialize(g):
 	scale.y = size_scale / g.scale.y
 	scale.z = size_scale / g.scale.z
 	ground = g
+
+func _get_random_direction() -> Vector3:
+	return (transform.basis * Vector3(2 * PI * randf(), 0, 0)).normalized()
+	## why is transform.basis needed? this could be global?
+	#return Vector3(2 * PI * randf(), 0, 0).normalized()
+
+func reverse_direction(): 
+	direction *= -1
 
 func set_random_rotate_y():
 	rotate_y(randf() * PI)

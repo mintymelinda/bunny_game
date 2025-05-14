@@ -12,11 +12,7 @@ signal ate(combo)
 
 @export var speed = 14
 @export var fall_acceleration = 75
-@export var jump_impulse = 20
-@export var bounce_impulse = 16
-@export var max_combo = 5
-@export var slam_impulse = 64
-@export var rotation_speed = 2
+@export var jump_impulse = 100
 
 @export var horizontal_sensitivity = 0.5
 @export var vertical_sensitivity = 0.5
@@ -68,7 +64,8 @@ func _input(event: InputEvent) -> void:
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				if interacting_with:
 					DialogueManager.show_dialogue_balloon(interacting_with.resource, interacting_with.location)
-
+				else:
+					Globals.switch_to_animation(animation_player, "Slash", true)
 			if event.button_index == MOUSE_BUTTON_MIDDLE:
 				zoom_factor += 1
 				if zoom_factor >= zoom_factors.size():
@@ -92,11 +89,22 @@ func _unhandled_input(event: InputEvent) -> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
+	if direction and is_on_floor():
+		if Input.is_action_pressed("run"):
+			#running speed
+			Globals.switch_to_animation(animation_player, "Run")
+		else:
+			Globals.switch_to_animation(animation_player, "Walk")
+	#else:
+		#animation_player.pause()
+		
+	
 	if Input.is_action_just_pressed("jump"):
 		var interactions = $Pivot/InteractionFinder.get_overlapping_areas()
 		if interactions.size() > 0:
 			interactions[0].action()
 		else:
+			Globals.switch_to_animation(animation_player, "Jump")
 			combo = max(1, combo - 1)
 			target_velocity.y = jump_impulse * (1 + combo) * 0.5
 			jump.emit()
@@ -110,19 +118,9 @@ func _physics_process(delta):
 		
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
-	
-	if is_on_floor():
-		if direction:
-			if animation_player.current_animation != "walk":
-				animation_player.play("walk")
-		else:
-			if animation_player.current_animation != "stand":
-				animation_player.play("stand")
 
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
-		if animation_player.current_animation != "fly":
-			animation_player.play("fly")
 		
 	for index in range(get_slide_collision_count()):
 		var collision = get_slide_collision(index)
@@ -137,7 +135,6 @@ func _physics_process(delta):
 				if Vector3.UP.dot(collision.get_normal()) > 0.1:
 					var rock = collision.get_collider()
 					rock.smash()
-					bounce()
 				break
 
 		if collision.get_collider().is_in_group("food"):
@@ -145,15 +142,12 @@ func _physics_process(delta):
 			if Vector3.UP.dot(collision.get_normal()) > 0.1:
 				food.eat(combo)
 				ate.emit(combo)
-				bounce()
 				break
 		
 		moved.emit(position)
 		
 	velocity = target_velocity
 	move_and_slide()
-	
-	$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
 
 func get_next_item():
 	var next_index = power_ups.find(selected_power_up) + 1
@@ -162,10 +156,6 @@ func get_next_item():
 	selected_power_up = power_ups.get(next_index)
 	select_power_up.emit(selected_power_up)
 
-func bounce():
-	combo += 1
-	combo = min(combo, max_combo)
-	target_velocity.y = bounce_impulse * (1 + combo) * 0.5
 
 func die():
 	combo = 0

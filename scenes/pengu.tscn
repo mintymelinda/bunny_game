@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7uup85jljw1p"]
+[gd_scene load_steps=6 format=3 uid="uid://c7uup85jljw1p"]
 
 [ext_resource type="Script" uid="uid://c4vcsn8ji6euo" path="res://scripts/penguin.gd" id="1_0e0b4"]
 [ext_resource type="PackedScene" uid="uid://binl30ltubfnh" path="res://art/penguin_two_point_oh.glb" id="2_4hnfy"]
-[ext_resource type="PackedScene" uid="uid://cem017kh7k78h" path="res://art/penguin.glb" id="2_cd7f6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_idetp"]
 radius = 0.959654
@@ -19,11 +18,9 @@ collision_layer = 256
 collision_mask = 5
 script = ExtResource("1_0e0b4")
 speed = 3.0
+random = false
 
 [node name="Character" parent="." instance=ExtResource("2_4hnfy")]
-
-[node name="CharacterBackup" parent="." instance=ExtResource("2_cd7f6")]
-visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55987, 0)

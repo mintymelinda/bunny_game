@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6yn17rawehxi"]
+
+[ext_resource type="PackedScene" uid="uid://c5f3uj8ws4y25" path="res://art/_player_rigged.glb" id="1_2265t"]
+
+[node name="_player_rigged" instance=ExtResource("1_2265t")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/position = Vector3(-6.89394e-10, -0.017128, -0.0281393)
+bones/0/rotation = Quaternion(-0.0269219, 1.19166e-07, -3.20934e-09, 0.999638)
+bones/2/rotation = Quaternion(0.0348398, 9.82574e-05, 0.00186643, 0.999391)
+bones/5/rotation = Quaternion(0.00489384, -0.0156983, -0.785944, 0.618079)
+bones/6/rotation = Quaternion(-0.0307413, -0.0277775, -0.539724, 0.840822)
+bones/7/rotation = Quaternion(0.150521, 0.757851, -0.0107884, 0.634735)
+bones/8/rotation = Quaternion(-0.0435498, -0.000118892, 0.000667777, 0.999051)
+bones/9/rotation = Quaternion(0.00574129, -9.5781e-06, -0.00376863, 0.999977)
+bones/11/rotation = Quaternion(0.0626012, -0.0332001, 0.781941, 0.619312)
+bones/12/rotation = Quaternion(0.0442482, 0.0226248, 0.382347, 0.922681)
+bones/13/rotation = Quaternion(0.317304, -0.697353, 0.112805, 0.632686)
+bones/14/rotation = Quaternion(-0.00675898, -0.000124122, -0.0326149, 0.999445)
+bones/15/rotation = Quaternion(0.0025862, 1.50019e-08, 0.0309576, 0.999517)
+bones/18/rotation = Quaternion(-0.522724, -0.425003, -0.581523, 0.45603)
+bones/19/rotation = Quaternion(-0.63209, -0.145554, -0.155196, 0.745112)
+bones/20/rotation = Quaternion(0.0442575, 0.00314022, 0.15661, 0.986663)
+bones/21/rotation = Quaternion(-0.000771087, -0.000331513, -0.717567, 0.696489)
+bones/22/position = Vector3(-4.66024e-05, -0.00151467, 0.0280985)
+bones/22/rotation = Quaternion(-0.509644, 0.453742, 0.500851, 0.532475)
+bones/23/rotation = Quaternion(-0.708187, -0.143305, 0.0253468, 0.690864)
+bones/24/rotation = Quaternion(-0.0099898, 0.00129268, -0.199329, 0.979881)
+bones/25/rotation = Quaternion(0.13648, -4.65661e-08, 0.814397, 0.564032)
+bones/26/position = Vector3(1.9768e-15, -1.19148e-07, -8.29128e-09)
+
+[node name="sword-col" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(0.189342, 0.0522041, -0.0377389, 0.0409632, -0.188006, -0.0545491, -0.0497142, 0.0439127, -0.18868, -0.705476, -0.0297848, 0.0330219)
+
+[node name="Cylinder_001" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, 1.16646e-14, -2.38418e-07, -1.28327e-08, -0.99855, -0.0538243, -2.38073e-07, 0.0538243, -0.99855, -6.89387e-10, 1.27819, -0.09796)

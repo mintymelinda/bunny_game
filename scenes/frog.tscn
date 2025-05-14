@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://b05cuifpf1uh4"]
+
+[ext_resource type="PackedScene" uid="uid://4w624ngkcms8" path="res://art/frog.glb" id="1_mqod6"]
+[ext_resource type="Script" uid="uid://bmlc7ubr848f6" path="res://scripts/frog.gd" id="1_qyo2l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qyo2l"]
+albedo_color = Color(0.195351, 0.421523, 0.189047, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rq8tc"]
+height = 1.86853
+radius = 1.68994
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1g2vb"]
+height = 1.72192
+radius = 4.14844
+
+[node name="Frog" type="CharacterBody3D"]
+script = ExtResource("1_qyo2l")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="frog" parent="Pivot" instance=ExtResource("1_mqod6")]
+
+[node name="Cube" parent="Pivot/frog" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_qyo2l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.853197, 0)
+shape = SubResource("CylinderShape3D_rq8tc")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 9
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91687, 0.000571132)
+shape = SubResource("CylinderShape3D_1g2vb")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+
+[editable path="Pivot/frog"]

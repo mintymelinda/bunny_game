@@ -1,10 +1,6 @@
 extends SeedableCharacter
 class_name Penguin
 
-@export var speed = 2.0
-@export var random = true
-
-var direction = Vector3.ZERO
 var last_direction = Vector3.ZERO
 var waving = false
 var slide = false
@@ -24,32 +20,21 @@ func _get_scaled_radius() -> float:
 func _process(delta: float) -> void:
 	if not direction:
 		if waving:
-			_switch_to_animation("wave")
+			Globals.switch_to_animation($Character/AnimationPlayer, "wave")
 		else:
-			_switch_to_animation("idle")
+			Globals.switch_to_animation($Character/AnimationPlayer, "idle")
 	else:
 		if slide:
-			_switch_to_animation("slide")
+			Globals.switch_to_animation($Character/AnimationPlayer, "slide")
 			slide = false
 		else:
-			_switch_to_animation("walk", true)
+			Globals.switch_to_animation($Character/AnimationPlayer, "walk", true)
 
-func _switch_to_animation(name: String, wait: bool = false):
-	var animation_player = $Character/AnimationPlayer
-	if wait and animation_player.is_playing():
-		return
-
-	if animation_player.current_animation != name:
-		animation_player.play(name)
-
-	if not animation_player.is_playing():
-		animation_player.play(name)
-
-func _get_random_direction() -> Vector3:
-	return (transform.basis * Vector3(2 * PI * randf(), 0, 0)).normalized()
-
-func reverse_direction(): 
-	direction *= -1
+#func _get_random_direction() -> Vector3:
+	#return (transform.basis * Vector3(2 * PI * randf(), 0, 0)).normalized()
+#
+#func reverse_direction(): 
+	#direction *= -1
 
 func _ready() -> void:
 	if random:

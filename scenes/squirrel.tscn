@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://x4wyc4lyq5vl"]
+
+[ext_resource type="Script" uid="uid://bve1lu7lfvuad" path="res://scripts/squirrel.gd" id="1_m3xcr"]
+[ext_resource type="PackedScene" uid="uid://btnpgghvfywsl" path="res://art/squirrel.glb" id="2_cbpea"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_m3xcr"]
+height = 0.796814
+radius = 0.560547
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cbpea"]
+radius = 0.646484
+
+[node name="Squirrel" type="CharacterBody3D" groups=["climber"]]
+collision_layer = 512
+collision_mask = 783
+script = ExtResource("1_m3xcr")
+metadata/_custom_type_script = "uid://02o8tvm52ra0"
+
+[node name="Area" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.402, 0)
+shape = SubResource("CylinderShape3D_m3xcr")
+
+[node name="TrunkDetector" type="Area3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrunkDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.799322, 0.997898, 0)
+shape = SubResource("CylinderShape3D_cbpea")
+
+[node name="Character" parent="." instance=ExtResource("2_cbpea")]
+
+[node name="Armature" parent="Character" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Character/Armature" index="0"]
+bones/0/position = Vector3(-0.0172921, 0.68983, 9.60343e-15)
+bones/0/rotation = Quaternion(-7.67344e-08, -6.23467e-08, -0.776765, 0.62979)
+bones/1/rotation = Quaternion(-0.0122083, 2.44123e-05, 0.0862803, 0.996196)
+bones/2/rotation = Quaternion(0.747677, -0.110136, 0.623065, -0.201592)
+bones/3/rotation = Quaternion(0.673512, -0.150018, 0.0982234, 0.717098)
+bones/5/rotation = Quaternion(-0.655606, 0.173801, -0.0865683, 0.729712)
+bones/6/position = Vector3(1.024e-07, 1.76874e-07, -2.80674e-08)
+bones/6/rotation = Quaternion(0.575189, 0.69123, 0.116613, -0.421616)
+bones/7/position = Vector3(3.76475e-08, 1.67709e-07, 2.41655e-09)
+bones/7/rotation = Quaternion(-0.100289, -0.402605, -0.578789, 0.702036)
+bones/8/position = Vector3(-0.0172921, 0.68983, 3.4292e-10)
+
+[node name="Cube_001" parent="Character/Armature/Skeleton3D" index="0"]
+visible = false
+
+[connection signal="body_entered" from="TrunkDetector" to="." method="_on_trunk_detector_body_entered"]
+
+[editable path="Character"]

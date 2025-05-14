@@ -3,10 +3,6 @@
 [ext_resource type="Script" uid="uid://drqbajn5cqtyc" path="res://scripts/tree.gd" id="1_h82ma"]
 [ext_resource type="PackedScene" uid="uid://dvma3hv6ifdq4" path="res://art/tree_pine.glb" id="2_q7hu3"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_h82ma"]
-height = 0.67334
-radius = 2.87354
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_q7hu3"]
 height = 3.15332
 radius = 0.336426
@@ -15,16 +11,16 @@ radius = 0.336426
 radius = 1.7883
 height = 4.69932
 
-[node name="Pine" type="StaticBody3D"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_h82ma"]
+height = 0.67334
+radius = 2.87354
+
+[node name="Pine" type="StaticBody3D" groups=["tree"]]
 script = ExtResource("1_h82ma")
 
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="tree_pine" parent="Pivot" instance=ExtResource("2_q7hu3")]
-
-[node name="Area" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.354268, 0)
-shape = SubResource("CylinderShape3D_h82ma")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7469, 0)
@@ -33,3 +29,11 @@ shape = SubResource("CylinderShape3D_q7hu3")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.22717, 0)
 shape = SubResource("CapsuleShape3D_rh7l6")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="Area" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.354268, 0)
+shape = SubResource("CylinderShape3D_h82ma")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

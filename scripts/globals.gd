@@ -24,6 +24,17 @@ func set_location(loc: location, player):
 		current_location = loc
 		location_changed.emit(player)
 
+func switch_to_animation(animation_player: AnimationPlayer, animation: String, wait: bool = false):
+	if wait and animation_player.is_playing():
+		return
+
+	# this might be handled automatically honestly
+	if animation_player.current_animation != animation:
+		animation_player.play(animation)
+
+	if not animation_player.is_playing():
+		animation_player.play(animation)
+
 func location_position() -> Vector3:
 	match current_location:
 		location.start:
